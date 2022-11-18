@@ -1,0 +1,431 @@
+﻿@model IEnumerable<CourierService.ViewModels.TaskManagements.TaskMailViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+<div class="row">
+    <div class="col-sm-12">
+        <!-- Tab variant tab card start -->
+        <div class="card">
+            <div class="card-header">
+                <h5 style="font-size: 25px !important;">Task Management</h5>
+            </div>
+
+            <div class="card-block tab-icon">
+
+                <div class="row">
+                    <div class="col-lg-4">
+                        <a href="/TaskManager/AddMail" class="btn btn-primary" style=" height: auto; padding-left: 30px; padding-right: 30px; border-radius: 50px;">Add Email</a>
+                    </div>
+                    <div class="col-lg-4">
+                    </div>
+                    <div class="col-lg-4"></div>
+                </div>
+
+                <!-- Row start -->
+                <div class="row">
+                    <div class="col-lg-12 col-xl-12">
+
+                        <!-- Nav tabs -->
+                        <div class="col-lg-12">
+                            <ul class="nav nav-tabs md-tabs " role="tablist">
+
+                                <li class="nav-item" id="Pending">
+                                    <a class="nav-link active classhover" data-toggle="tab" href="#home1" role="tab" style="font-size: 20px !important;"><span class="pcoded-micon"><i class="feather icon-settings"></i></span>Pending </a>
+                                    <div class="slide"></div>
+                                </li>
+                                <li class="nav-item" id="Completed">
+                                    <a class="nav-link classhover" data-toggle="tab" href="#home2" role="tab" style="font-size: 20px !important;"><i class="ti-check-box"></i>Completed </a>
+                                    <div class="slide"></div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content card-block">
+                            <div class="tab-pane active" id="home1" role="tabpanel">
+                                <div id="PendingPartial" style="overflow-x:auto;">
+
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="home2" role="tabpanel">
+                                <div id="CompletedPartial" style="overflow-x:auto;">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Row end -->
+            </div>
+        </div>
+        <!-- Tab variant tab card start -->
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" id="DeleteMailModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Delete Order
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h3>Do you want to delete this?</h3>
+            </div>
+            <div class="modal-footer">
+                <a onclick="DeletedMail()" class="btn btn-primary">Delete</a>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="DeleteTaskDetailModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Delete Task
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h3>Do you want to delete this?</h3>
+            </div>
+            <div class="modal-footer">
+                <a onclick="DeletedTaskDetail()" class="btn btn-primary">Delete</a>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="UpdateTDModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Update Task
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h3>Do you want to Update the Status?</h3>
+            </div>
+            <div class="modal-footer">
+                <a onclick="UpdatedTD()" class="btn btn-primary">Update</a>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="CompleteAllStatusModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Complete Task
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h3>Do you want to mark all the status as Completed ?</h3>
+            </div>
+            <div class="modal-footer">
+                <a onclick="CompletedAllStatus()" class="btn btn-primary">Update</a>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="CompletedTDModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Update Task Detail
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h3>Do you want to mark task status as pending ?</h3>
+            </div>
+            <div class="modal-footer">
+                <a onclick="UpdatedCompletedTD()" class="btn btn-primary">Update</a>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<img id="loading-image" src="~/Content/Images/PdfMergingLoader.gif" style="display:none" />
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+@section scripts{
+
+
+    <script>
+        function Pending() {
+
+            $.ajax({
+                url: '@Url.Action("Pending", "TaskManager")',
+                beforeSend: function () {
+                    $("#loading-image").show();
+                },
+		    })
+            .done(function (response) {
+                debugger;
+                $("#PendingPartial").html(response);
+                $("#loading-image").hide();
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        	    alert("FAIL");
+            });
+        }
+    </script>
+    <script>
+        function Completed() {
+
+            $.ajax({
+                url: '@Url.Action("Completed", "TaskManager")',
+                beforeSend: function () {
+                    $("#loading-image").show();
+                },
+		    })
+            .done(function (response) {
+                debugger;
+                $("#CompletedPartial").html(response);
+                $("#loading-image").hide();
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        	    alert("FAIL");
+            });
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            Pending();
+        });
+    </script>
+    <script>
+
+        $("#Pending").click(function () {
+            Pending();
+        });
+    </script>
+    <script>
+
+        $("#Completed").click(function () {
+            Completed();
+        });
+    </script>
+
+    <script>
+
+        var deleteId = 0;
+        DeleteMail = function (Id) {
+            deleteId = Id;
+            $("#DeleteMailModal").modal("show");
+        }
+        DeletedMail = function (Id) {
+            var dta = { "id": deleteId };
+        $.ajax({
+        type: "POST",
+        url: '@Url.Action("DeleteMail", "TaskManager")',
+            data: JSON.stringify(dta),
+            contentType: 'application/json;charset=utf-8"',
+        })
+            .done(function (response) {
+                if (response === "Failed") {
+                    alert("Fail!");
+                } else {
+                    $("#DeleteMailModal").modal("hide");
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Delete Successfully',
+                        showConfirmButton: true,
+                        timer: 1500
+                    })
+                    $("#Pending").trigger('click');
+                   // window.location.href = '/TaskManager/Index';
+
+                }
+
+        })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                $("#DeleteMailModal").modal("hide");
+                alert("Fail!");
+        });
+        }
+    </script>
+
+    <script>
+
+        var ID = 0;
+        DeleteTaskDetail = function (id) {
+            ID = id;
+            $("#DeleteTaskDetailModal").modal("show");
+        }
+        DeletedTaskDetail = function () {
+            var dta = { "id": ID };
+        $.ajax({
+        type: "POST",
+        url: '@Url.Action("DeleteTaskDetail", "TaskManager")',
+            data: JSON.stringify(dta),
+            contentType: 'application/json;charset=utf-8"',
+        })
+            .done(function (response) {
+                if (response === "Failed") {
+                    alert("Fail!");
+                } else {
+                    $("#DeleteTaskDetailModal").modal("hide");
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Delete Successfully',
+                        showConfirmButton: true,
+                        timer: 1500
+                    })
+                    $("#Pending").trigger('click');
+                   // window.location.href = '/TaskManager/Index';
+
+                }
+
+        })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                $("#DeleteTaskDetailModal").modal("hide");
+                alert("Fail!");
+        });
+        }
+    </script>
+
+
+    <script>
+
+        var updateId = 0;
+        UpdateTD = function (id) {
+            updateId = id;
+            $("#UpdateTDModal").modal("show");
+        }
+        UpdatedTD = function () {
+            var UpdateID = { "id": updateId };
+        $.ajax({
+        type: "POST",
+        url: '@Url.Action("IsStatusUpdate", "TaskManager")',
+            data: JSON.stringify(UpdateID),
+            contentType: 'application/json;charset=utf-8"',
+        })
+            .done(function (response) {
+                if (response === "Failed") {
+                    alert("Fail!");
+                } else {
+                    $("#UpdateTDModal").modal("hide");
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Update Successfully',
+                        showConfirmButton: true,
+                        timer: 1500
+                    })
+                    $("#Pending").trigger('click');
+
+                }
+
+        })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                $("#UpdateTDModal").modal("hide");
+                alert("Fail!");
+        });
+        }
+    </script>
+
+
+    <script>
+
+        var completeId = 0;
+        CompleteAllStatus = function (id) {
+            completeId = id;
+            $("#CompleteAllStatusModal").modal("show");
+        }
+        CompletedAllStatus = function () {
+            var CompleteID = { "id": completeId };
+        $.ajax({
+        type: "POST",
+        url: '@Url.Action("CompleteAll", "TaskManager")',
+            data: JSON.stringify(CompleteID),
+            contentType: 'application/json;charset=utf-8"',
+        })
+            .done(function (response) {
+                if (response === "Failed") {
+                    alert("Fail!");
+                } else {
+                    $("#CompleteAllStatusModal").modal("hide");
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Complete Successfully',
+                        showConfirmButton: true,
+                        timer: 1500
+                    })
+                    $("#Pending").trigger('click');
+
+                }
+
+        })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                $("#CompleteAllStatusModal").modal("hide");
+                alert("Fail!");
+        });
+        }
+    </script>
+
+    <script>
+
+        var updateCompletedId = 0;
+        UpdateCompletedTD = function (id) {
+            updateCompletedId = id;
+            $("#CompletedTDModal").modal("show");
+        }
+        UpdatedCompletedTD = function (Id) {
+            var UpdateCompletedID = { "id": updateCompletedId };
+        $.ajax({
+        type: "POST",
+        url: '@Url.Action("IsStatusUpdate", "TaskManager")',
+            data: JSON.stringify(UpdateCompletedID),
+            contentType: 'application/json;charset=utf-8"',
+        })
+            .done(function (response) {
+                debugger
+                if (response === "Failed") {
+                    $("#CompletedTDModal").modal("hide");
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Update Successfully',
+                        showConfirmButton: true,
+                        timer: 1500
+                    })
+                    $("#Completed").trigger('click');
+                } else {
+                    alert("Fail!");
+                }
+
+        })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                $("#CompletedTDModal").modal("hide");
+                alert("Fail!");
+        });
+        }
+    </script>
+}

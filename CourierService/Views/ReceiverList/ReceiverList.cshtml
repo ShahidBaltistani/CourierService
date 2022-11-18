@@ -1,0 +1,843 @@
+﻿@model IEnumerable<CourierService.ViewModels.Orders.OrderViewModel>
+@{
+    ViewBag.Title = "ReceiverList";
+}
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<style>
+    .classhover:hover {
+        color: #4f99ff !important;
+    }
+</style>
+<div class="row">
+    <div class="col-sm-12">
+        <!-- Tab variant tab card start -->
+        <div class="card">
+            <div class="card-header">
+                <h5 style="font-size: 25px !important;">Order's Detail</h5>
+            </div>
+            <div class="card-block tab-icon">
+                <!-- Row start -->
+                <div class="row">
+                    <div class="col-lg-12 col-xl-12">
+
+                        <!-- Nav tabs -->
+                        <div class="col-lg-12">
+                            <ul class="nav nav-tabs md-tabs " role="tablist">
+
+                                <li class="nav-item" id="processed">
+                                    <a class="nav-link active classhover" data-toggle="tab" href="#home7" role="tab" style="font-size: 20px !important;"><i class="ti-check-box"></i>Processed<small style="color:gray"> (Rpd_Device)</small></a>
+                                    <div class="slide"></div>
+                                </li>
+                                <li class="nav-item" id="Accessories">
+                                    <a class="nav-link classhover" data-toggle="tab" href="#home8" role="tab" style="font-size: 20px !important;"><i class="ti-headphone"></i>Accessories </a>
+                                    <div class="slide"></div>
+                                </li>
+                                <li class="nav-item" id="Returns">
+                                    <a class="nav-link classhover" data-toggle="tab" href="#home10" role="tab" style="font-size: 20px !important;"><i class="ti-back-left"></i>Returns </a>
+                                    <div class="slide"></div>
+                                </li>
+                                <li class="nav-item" id="Replacement">
+                                    <a class="nav-link classhover" data-toggle="tab" href="#home11" role="tab" style="font-size: 20px !important;"><i class="ti-arrow-circle-down"></i>Replacement </a>
+                                    <div class="slide"></div>
+                                </li>
+                                <li class="nav-item" id="Cancelled">
+                                    <a class="nav-link classhover" data-toggle="tab" href="#home12" role="tab" style="font-size: 20px !important;"><i class="ti-trash"></i>Cancelled </a>
+                                    <div class="slide"></div>
+                                </li>
+                                <li class="nav-item" id="BulkPackaging">
+                                    <a class="nav-link classhover" data-toggle="tab" href="#home9" role="tab" style="font-size: 20px !important;"><i class="ti-archive"></i>Bulk_Packaging </a>
+                                    <div class="slide"></div>
+                                </li>
+                                <li class="nav-item" id="miscellaneous">
+                                    <a class="nav-link classhover" data-toggle="tab" href="#home13" role="tab" style="font-size: 20px !important;"><i class="ti-lock"></i>Miscellaneous </a>
+                                    <div class="slide"></div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content card-block">
+                            <div class="tab-pane active" id="home7" role="tabpanel">
+                                <div id="Processed">
+
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" id="home8" role="tabpanel">
+                                <div id="AccessoriesPartialView">
+
+                                </div>
+                            </div>
+
+
+                            <div class="tab-pane" id="home10" role="tabpanel">
+                                <div id="ReturnsPartialView">
+
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="home11" role="tabpanel">
+                                <div id="ReplacementPartialView">
+
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="home12" role="tabpanel">
+                                <div id="CancelledPartialView">
+
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="home9" role="tabpanel">
+                                <div id="BulkPackagingPartialView">
+
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="home13" role="tabpanel">
+                                <div id="MiscellaneousPartialView">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Row end -->
+            </div>
+        </div>
+        <!-- Tab variant tab card start -->
+    </div>
+</div>
+<img id="loading-image" src="~/Content/Images/PdfMergingLoader.gif" style="display:none" />
+<style>
+    #loading-image {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        z-index: 9999;
+    }
+</style>
+
+<div class="modal" tabindex="-1" role="dialog" id="CustomerReferenceModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <span id="ReceiverName">
+
+                    </span>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/ReceiverList/UpdateCRSingle">
+                <div class="modal-body">
+                    <input name="Id" hidden id="Customer_Reference_Id" />
+                    <input type="text" class="form-control" name="Customer_Reference" />
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section scripts {
+
+    <script>
+
+
+        @*$("#All").click(function () {
+
+
+            $.ajax({
+                url: '@Url.Action("AllOrders", "CreatingOrders")',
+                beforeSend: function () {
+                    $("#loading-image").show();
+                },
+		    })
+            .done(function (response) {
+                //debugger;
+                $("#AllPartialView").html(response);
+                $("#loading-image").hide();
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        	    alert("FAIL");
+            });
+
+
+            //$("#DeliveredPartialView").load('/CreatingOrders/DeliveredOrders');
+
+        });*@
+    </script>
+
+    <script>
+        function SendRequest(Id) {
+            $.ajax({
+                type: "GET",
+                url: "/ReceiverList/TrackOrder/" + Id,
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                beforeSend: function () {
+                    $("#PdfMergingLoader").show();
+                },
+                complete: function () {
+                    $("#PdfMergingLoader").hide();
+                },
+                success: function (data) {
+                    alert(data);
+                },
+                error: function (result) {
+                    alert('Please Try Again...');
+                }
+            });
+        }
+    </script>
+
+    <script>
+
+        @*$("#Delivered").click(function () {
+
+
+            $.ajax({
+                url: '@Url.Action("DeliveredOrders", "CreatingOrders")',
+                beforeSend: function () {
+                    $("#loading-image").show();
+                },
+		    })
+            .done(function (response) {
+                //debugger;
+                $("#DeliveredPartialView").html(response);
+                getAllUniqueDeliveredPracticeId();
+                $("#loading-image").hide();
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        	    alert("FAIL");
+            });
+
+
+            //$("#DeliveredPartialView").load('/CreatingOrders/DeliveredOrders');
+
+        });*@
+    </script>
+
+    <script>
+
+        //function getAllUniqueDeliveredPracticeId() {
+        //    $.ajax({
+        //        type: "GET",
+        //        url: "/ReceiverList/GetAllUniqueDeliveredPracticeId",
+        //        dataType: "json",
+        //        success: function (result) {
+        //            $('#searchDDDerlivered').html('');
+        //            var rows1 = "<option value='' selected disabled > --Select PracticeId--</option >";
+        //            $('#searchDDDerlivered').append(rows1);
+
+        //            $.each(result, function (i, item) {
+        //                var rows;
+        //                rows = "<option value='" + item + "'>" + item + "</option>";
+        //                $('#searchDDDerlivered').append(rows);
+        //            });
+        //        }
+        //    })
+        //};
+    </script>
+
+    <script>
+
+        @*$("#Cancelled").click(function () {
+
+
+            $.ajax({
+                url: '@Url.Action("CancelledOrders", "CreatingOrders")',
+                beforeSend: function () {
+                    $("#loading-image").show();
+                },
+		    })
+            .done(function (response) {
+                //debugger;
+                $("#CancelledPartialView").html(response);
+                getAllUniqueCanceledPracticeId();
+                $("#loading-image").hide();
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        	    alert("FAIL");
+            });
+        });*@
+    </script>
+
+    <script>
+
+        //function getAllUniqueCanceledPracticeId() {
+        //    $.ajax({
+        //        type: "GET",
+        //        url: "/ReceiverList/GetAllUniqueCanceledPracticeId",
+        //        dataType: "json",
+        //        success: function (result) {
+        //            $('#searchDDCanceled').html('');
+        //            var rows1 = "<option value='' selected disabled > --Select PracticeId--</option >";
+        //            $('#searchDDCanceled').append(rows1);
+
+        //            $.each(result, function (i, item) {
+        //                var rows;
+        //                rows = "<option value='" + item + "'>" + item + "</option>";
+        //                $('#searchDDCanceled').append(rows);
+        //            });
+        //        }
+        //    })
+        //};
+    </script>
+
+    <script>
+        //checkboxes select all and unselect
+        $('#checkall').change(function () {
+            $('.cb-element').prop('checked', this.checked);
+        });
+
+        $('.cb-element').change(function () {
+            if ($('.cb-element:checked').length == $('.cb-element').length) {
+                $('#checkall').prop('checked', true);
+            }
+            else {
+                $('#checkall').prop('checked', false);
+            }
+
+        });
+
+    </script>
+
+
+
+    <script>
+        //disable create order button until chechbox and date not selected
+        $(function () {
+            var chk = $('.check');
+            var btn = $('#getvalues');
+
+            chk.on('change', function () {
+                btn.prop("disabled", !this.checked);//true: disabled, false: enabled
+            }).trigger('change'); //page load trigger event
+
+        });
+
+    </script>
+
+
+    <script>
+        CustomerReferenceModal = function (Id) {
+
+            $.ajax({
+                type: "GET",
+                url: "/ReceiverList/GetOrderName/" + Id,
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    $("#CustomerReferenceModal").modal('show');
+
+
+                    $("#Customer_Reference_Id").val(Id);
+                    $("#ReceiverName").text(data.Receiver.Name);
+
+                },
+                error: function (result) {
+                    alert('Please Try Again...');
+                }
+            });
+        };
+
+    </script>
+
+    <script>
+        //pass pickupdate and id's in array to creating order methode
+        $("#getvalues").click(function () {
+            var pickUpDate = $(".datepickerpost").val();
+            var List = [];
+            $("input[name='checkboxselected']:checked").each(function (id) {
+
+                var closestTr = $(this).closest('tr').attr('id');
+                List.push(closestTr);
+
+            });
+
+            var data0 = { Id: List, PickUpDate: pickUpDate };
+
+            var json = JSON.stringify(data0);
+
+            $.ajax({
+                type: "POST",
+                url: "/CreatingOrders/CreatingOrder",
+                data: json,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    swal('Order Created Successfully...');
+                    window.location.reload();
+                }
+            });
+        });
+    </script>
+
+
+    <script>
+
+        //save forms
+        //$("#save_Refbtn").click(function () {
+
+        //    var customerarray = [];
+
+        //    $('#InProcesstable tr').each(function () {
+
+        //        var customerName = $(this).find(".cref-name").val();
+        //        var orderId = $(this).find(".orderId").val();
+
+        //        queryStr = { "Customer_Reference": customerName, "Id": orderId };
+        //        customerarray.push(queryStr);
+
+        //    });
+
+        //    customerarray.shift();
+        //    $.ajax({
+        //        type: 'POST',
+        //        url: '/ReceiverList/UpdateCustomerRefrenceInProcess',
+        //        data: { "model": customerarray }
+        //    })
+        //        .done(function (response) {
+        //            alert("Save")
+        //        })
+        //        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        //            alert("Fail")
+        //        });
+        //});
+    </script>
+
+    <script>
+
+        //save forms processed
+        $("#save_Refbtnprocessed").click(function () {
+
+            var customerarrayProcessed = [];
+
+            $('#Processedtable tr').each(function () {
+
+                var customerNameProcessed = $(this).find(".cref-nameProcessed").val();
+                var orderIdProcessed = $(this).find(".orderIdProcessed").val();
+
+                queryStr1 = { "Customer_Reference": customerNameProcessed, "Id": orderIdProcessed };
+                customerarrayProcessed.push(queryStr1);
+
+            });
+
+            customerarrayProcessed.shift();
+            $.ajax({
+                type: 'POST',
+                url: '/ReceiverList/UpdateCustomerRefrenceProcessed',
+                data: { "model": customerarrayProcessed }
+            })
+                .done(function (response) {
+
+                    alert("Save")
+                })
+                .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Fail")
+                });
+        });
+    </script>
+
+
+    <script>
+        $("#searchbtn").click(function () {
+            debugger
+            var searchvalue = $("#searchTxt").val();
+
+            $.ajax({
+                url: '/ReceiverList/ProcessedOrdersSearch',
+                data: {
+                    Search: searchvalue
+                }
+            })
+                .done(function (response) {
+                    $("#Processed").html(response);
+                })
+                .fail(function (XMLHttpRequest, txtStatus, errorThrown) {
+                    alert("Fail");
+                });
+        });
+    </script>
+
+    <script>
+        //Reset Button
+        $("#resetBtn").click(function () {
+            var searchvalue = '';
+
+            $.ajax({
+                url: '/ReceiverList/GetAllProcessedOrders',
+                data: {
+                    Search: searchvalue
+                }
+            })
+                .done(function (response) {
+                    $("#Processedtable").html(response);
+                })
+                .fail(function (XMLHttpRequest, txtStatus, errorThrown) {
+                    alert("Fail");
+                });
+        });
+    </script>
+
+    <script>
+        //$("#searchbtnInProcess").click(function () {
+        //    debugger
+        //    var searchvalue = $("#searchTxtInProcess").val();
+
+        //    $.ajax({
+        //        url: '/ReceiverList/InprocessOrderSearch',
+        //        data: {
+        //            Search: searchvalue
+        //        }
+        //    })
+        //        .done(function (response) {
+        //            $("#InProcesstable").html(response);
+        //        })
+        //        .fail(function (XMLHttpRequest, txtStatus, errorThrown) {
+        //            alert("Fail");
+        //        });
+        //});
+    </script>
+
+    <script>
+        //$(document).ready(function () {
+        //    $('#selectSearch').on('change', function () {
+        //        debugger
+        //        var selected = $('#selectSearch option:selected').val();
+
+
+        //        $.ajax({
+        //            url: '/ReceiverList/GetSelectedOrders',
+        //            data: {
+        //                id: selected
+        //            }
+        //        })
+        //            .done(function (response) {
+        //                $("#InProcesstable").html(response);
+
+        //            })
+        //            .fail(function (XMLHttpRequest, txtStatus, errorThrown) {
+        //                alert("Fail");
+        //            });
+
+        //    });
+        //    InProcessOrder();
+        //});
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                url: "/ReceiverList/GetAllUniquePracticeId",
+                dataType: "json",
+                success: function (result) {
+                    $('#searchDD').html('');
+                    var rows1 = "<option value='' selected disabled > --Select PracticeId--</option >";
+                    $('#searchDD').append(rows1);
+
+                    $.each(result, function (i, item) {
+                        var rows;
+                        rows = "<option value='" + item + "'>" + item + "</option>";
+                        $('#searchDD').append(rows);
+                    });
+                }
+            });
+        });
+    </script>
+
+
+    <script>
+
+        @*$("#processed").click(function () {
+            debugger
+
+            $.ajax({
+                url: '@Url.Action("GetAllProcessedOrders", "ReceiverList")',
+                beforeSend: function () {
+                    $("#loading-image").show();
+                },
+		    })
+            .done(function (response) {
+                debugger;
+                $("#Processed").html(response);
+                getAllUniquePracticeId();
+                $("#loading-image").hide();
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        	    alert("FAIL");
+            });
+        });*@
+    </script>
+
+    <script>
+
+        //function getAllUniqueInProcessPracticeId() {
+        //    $.ajax({
+        //        type: "GET",
+        //        url: "/ReceiverList/GetAllUniqueInProcessPracticeId",
+        //        dataType: "json",
+        //        success: function (result) {
+        //            $('#searchDDIn').html('');
+        //            var rows1 = "<option value='' selected disabled > --Select PracticeId--</option >";
+        //            $('#searchDDIn').append(rows1);
+
+        //            $.each(result, function (i, item) {
+        //                var rows;
+        //                rows = "<option value='" + item + "'>" + item + "</option>";
+        //                $('#searchDDIn').append(rows);
+        //            });
+        //        }
+        //    })
+        //};
+    </script>
+
+    <script>
+
+        //$("#inprocess").click(function () {
+        //    debugger
+
+        //    InProcessOrder();
+        //});
+    </script>
+
+    <script>
+
+
+        @*function InProcessOrder() {
+
+
+
+        $.ajax({
+                url: '@Url.Action("GetInprocessOrder", "ReceiverList")',
+                beforeSend: function () {
+                    $("#loading-image").show();
+                },
+		    })
+            .done(function (response) {
+                debugger;
+                $("#Inprocess").html(response);
+                getAllUniqueInProcessPracticeId();
+                $("#loading-image").hide();
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        	    alert("FAIL");
+            });
+        };*@
+    </script>
+
+    <script>
+
+        $("#processed").click(function () {
+            ProcessOrder();
+        });
+    </script>
+
+    <script>
+        function ProcessOrder() {
+
+            $.ajax({
+                url: '@Url.Action("GetAllProcessedOrders", "ReceiverList")',
+                beforeSend: function () {
+                    $("#loading-image").show();
+                },
+		    })
+            .done(function (response) {
+                debugger;
+                $("#Processed").html(response);
+                getAllUniquePracticeId();
+                $("#loading-image").hide();
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        	    alert("FAIL");
+            });
+
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            ProcessOrder();
+        });
+    </script>
+    <script>
+
+        $("#Accessories").click(function () {
+
+            Accessories();
+        });
+    </script>
+
+    <script>
+    function Accessories() {
+
+            $.ajax({
+                url: '@Url.Action("GetAllAccessories", "ReceiverList")',
+                beforeSend: function () {
+                    $("#loading-image").show();
+                },
+		    })
+            .done(function (response) {
+                debugger;
+                $("#AccessoriesPartialView").html(response);
+                getAllUniquePracticeId();
+                $("#loading-image").hide();
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        	    alert("FAIL");
+            });
+
+        }
+    </script>
+
+    <script>
+
+        $("#BulkPackaging").click(function () {
+            BulkPackaging();
+        });
+    </script>
+
+    <script>
+        function BulkPackaging() {
+
+            $.ajax({
+                url: '@Url.Action("GetAllBulkPackaging", "ReceiverList")',
+                beforeSend: function () {
+                    $("#loading-image").show();
+                },
+		    })
+            .done(function (response) {
+                debugger;
+                $("#BulkPackagingPartialView").html(response);
+                getAllUniquePracticeId();
+                $("#loading-image").hide();
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        	    alert("FAIL");
+            });
+
+        }
+    </script>
+    <script>
+
+        $("#Returns").click(function () {
+            Returns();
+        });
+    </script>
+
+    <script>
+        function Returns() {
+
+            $.ajax({
+                url: '@Url.Action("GetAllReturns", "ReceiverList")',
+                beforeSend: function () {
+                    $("#loading-image").show();
+                },
+		    })
+            .done(function (response) {
+                debugger;
+                $("#ReturnsPartialView").html(response);
+                getAllUniquePracticeId();
+                $("#loading-image").hide();
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        	    alert("FAIL");
+            });
+
+        }
+    </script>
+
+    <script>
+
+        $("#Replacement").click(function () {
+            Replacements();
+        });
+    </script>
+
+    <script>
+        function Replacements() {
+
+            $.ajax({
+                url: '@Url.Action("GetAllReplacements", "ReceiverList")',
+                beforeSend: function () {
+                    $("#loading-image").show();
+                },
+		    })
+                .done(function (response) {
+                $("#ReplacementPartialView").html(response);
+                getAllUniquePracticeId();
+                $("#loading-image").hide();
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        	    alert("FAIL");
+            });
+
+        }
+    </script>
+    <script>
+
+        $("#Cancelled").click(function () {
+            Cancelled();
+        });
+    </script>
+
+    <script>
+        function Cancelled() {
+
+            $.ajax({
+                url: '@Url.Action("GetAllCanceledOrders", "ReceiverList")',
+                beforeSend: function () {
+                    $("#loading-image").show();
+                },
+		    })
+            .done(function (response) {
+                $("#CancelledPartialView").html(response);
+                getAllUniquePracticeId();
+                $("#loading-image").hide();
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        	    alert("FAIL");
+            });
+
+        }
+    </script>
+    <script>
+
+        $("#miscellaneous").click(function () {
+            miscellaneous();
+        });
+    </script>
+
+    <script>
+        function miscellaneous() {
+
+            $.ajax({
+                url: '@Url.Action("GetAllMiscellaneousOrders", "ReceiverList")',
+                beforeSend: function () {
+                    $("#loading-image").show();
+                },
+		    })
+            .done(function (response) {
+                $("#MiscellaneousPartialView").html(response);
+                getAllUniquePracticeId();
+                $("#loading-image").hide();
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        	    alert("FAIL");
+            });
+
+        }
+    </script>
+}

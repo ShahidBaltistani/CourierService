@@ -1,0 +1,85 @@
+﻿@model CourierService.ViewModels.Orders.OrderTrackingViewModel
+@{
+    ViewBag.Title = "TrackOrder";
+}
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>
+                State
+            </th>
+            <th>
+                Status
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @Model.State
+            </td>
+            <td>
+                @Model.Status.description
+                <br />
+                @Model.Status.last_changed_at
+            </td>
+        </tr>
+    </tbody>
+</table>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>
+                Event_Type
+            </th>
+            <th>
+                Scan_Time
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Origin_Location
+            </th>
+            <th>
+                Destination_Location
+            </th>
+            <th>
+                Requester
+            </th>
+            <th>
+                Location
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Tracking_Events)
+        {
+            <tr>
+                <td>
+                    @item.Event_Type
+                </td>
+                <td>
+                    @item.Scan_Time
+                </td>
+                <td>
+                    @item.Description
+                </td>
+                <td>
+                    @item.Origin_Location
+                </td>
+                <td>
+                    @item.Destination_Location
+                </td>
+                <td>
+                    @item.Requester
+                </td>
+                <td>
+                    @item.Location
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+

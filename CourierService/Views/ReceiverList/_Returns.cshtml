@@ -1,0 +1,468 @@
+﻿<script src="~/Content/DataTables (1)/datatables.min.js"></script>
+<link href="~/Content/DataTables (1)/datatables.min.css" rel="stylesheet" />
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.print.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/dataTables.buttons.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.semanticui.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.jqueryui.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.html5.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.foundation.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.flash.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.colVis.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.bootstrap4.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.bootstrap.min.js"></script>
+
+<link href="~/Content/DataTables (1)/Buttons-1.6.5/css/buttons.bootstrap.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/Buttons-1.6.5/css/buttons.bootstrap4.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/Buttons-1.6.5/css/buttons.dataTables.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/Buttons-1.6.5/css/buttons.foundation.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/Buttons-1.6.5/css/buttons.jqueryui.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/Buttons-1.6.5/css/buttons.semanticui.min.css" rel="stylesheet" />
+
+
+<link href="~/Content/DataTables (1)/SearchPanes-1.2.2/css/searchPanes.bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/SearchPanes-1.2.2/css/searchPanes.bootstrap4.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/SearchPanes-1.2.2/css/searchPanes.dataTables.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/SearchPanes-1.2.2/css/searchPanes.foundation.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/SearchPanes-1.2.2/css/searchPanes.jqueryui.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/SearchPanes-1.2.2/css/searchPanes.semanticui.min.css" rel="stylesheet" />
+
+<script src="~/Content/DataTables (1)/SearchPanes-1.2.2/js/dataTables.searchPanes.min.js"></script>
+<script src="~/Content/DataTables (1)/SearchPanes-1.2.2/js/searchPanes.bootstrap.min.js"></script>
+<script src="~/Content/DataTables (1)/SearchPanes-1.2.2/js/searchPanes.bootstrap4.min.js"></script>
+<script src="~/Content/DataTables (1)/SearchPanes-1.2.2/js/searchPanes.dataTables.min.js"></script>
+<script src="~/Content/DataTables (1)/SearchPanes-1.2.2/js/searchPanes.foundation.min.js"></script>
+<script src="~/Content/DataTables (1)/SearchPanes-1.2.2/js/searchPanes.jqueryui.min.js"></script>
+<script src="~/Content/DataTables (1)/SearchPanes-1.2.2/js/searchPanes.semanticui.min.js"></script>
+
+@model IEnumerable<CourierService.ViewModels.Orders.OrderViewModel>
+@using System.Globalization
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<form id="ReturnSearchForm">
+    <div class="row">
+        <div class="col-sm-2">
+            <input class="form-control" value="" id="" name="Receiver.Name" placeholder="Name" style="margin-top: 30px;height: 45px;" />
+        </div>
+        <div class="col-sm-2">
+            <input class="form-control" id="" name="Receiver.Address_Line2" placeholder="Address_Line2" style="margin-top: 30px;height: 45px;" />
+        </div>
+        <div class="col-sm-2" style="margin-top: 30px;">
+            <select id="ReturnsearchDD" class=" js-example-basic-single" name="PracticeId" style="height: 45px; width: 178px;">
+            </select>
+
+        </div>
+        <div class="col-sm-2">
+            <input class="form-control" id="" name="Customer_Reference" placeholder="Customer_Reference" style="margin-top: 30px;height: 45px;" />
+        </div>
+        <div class="col-sm-2" style="margin-top: 30px;">
+            <select id="" class=" js-example-basic-single" name="IsDelivered" style="height: 45px; width: 178px;">
+                <option value="" disabled selected>--select status--</option>
+                <option value="true">Delivered</option>
+            </select>
+        </div>
+
+        <div class="col-sm-2">
+            <input class="form-control datepickerpost" name="CreatedOn" type="date" id="datepicker-5" style="margin-top: 30px; height: 45px;" />
+        </div>
+
+
+
+    </div>
+
+</form>
+
+<div class="row">
+    <div class="col-lg-3">
+        <div class="btn-group " role="group" data-toggle="tooltip" data-placement="top" title="" data-original-title=".btn-xlg" style="margin-top:30px;width: 100%;display: flex !important;">
+            <button type="button" class="btn btn-primary btn-md waves-effect waves-light " id="ReturnSearch" style=" border-radius: 50px 0px 0px 50px;">Search</button>
+            <button type="button" class="btn btn-danger btn-md waves-effect waves-light resetBtn" id="ReturnresetBtn" style="border-radius: 0px 50px 50px 0px; margin-left: 2px;">Reset</button>
+        </div>
+
+    </div>
+    <div class="col-lg-3"></div>
+    <div class="col-lg-3"></div>
+    <div class="col-lg-3"></div>
+
+</div>
+
+<div class="row">
+    <div class="col-sm-3">
+        <form>
+            <button type="button" id="save_RefbtnprocessedReturn" class="btn btn-primary" style=" margin-top: 30px; width: 100%; height: auto; border-radius: 50px; padding: 10px;">Update Customer Reference </button>
+        </form>
+    </div>
+    <div class="col-sm-2">
+
+    </div>
+    <div class="col-sm-2">
+
+    </div>
+    <div class="col-sm-2">
+
+    </div>
+    <div class="col-sm-2">
+    </div>
+    <div class="col-sm-2">
+
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover ReturnsPaginationTable" id="Returnstable" style="overflow-x: scroll;">
+        <thead style="background:#eaefef">
+            <tr>
+                <th>#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Address</th>
+                <th scope="col">Customer_Reference</th>
+                <th scope="col">Order_Status</th>
+                <th scope="col">Print Status</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody class="ReturnsPaginationbody">
+            @foreach (var item in Model)
+            {
+                <tr id=@item.Id class="ReturnsPaginationRow">
+
+                    <td></td>
+
+                    <td>@item.Receiver.Name</td>
+
+                    @*<td style="width:150px !important;">@item.Receiver.Address_Line2</td>*@
+                    <td>@(item.Receiver.Address_Line2==null ? item.Receiver.Address_Line1 + item.Receiver.Suburb+ "," + item.Receiver.State_Name + " " + item.Receiver.Postcode: item.Receiver.Address_Line2)</td>
+
+                    @if (item.Customer_Reference == null)
+                    {
+                        <td>
+                            <form id="add_CustomerRefrenceprocessed">
+                                <input type="text" hidden class="form-control orderIdProcessed" value="@item.Id" name="Id" id="cref-id" style=" max-width: 560px;display: none;">
+
+                                <div class="form-group">
+                                    <input type="text" class="form-control cref-nameProcessed" value="@item.Customer_Reference" id="cref-name" name="Customer_Reference" style=" max-width: 560px;">
+                                </div>
+                            </form>
+
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @item.Customer_Reference
+                        </td>
+                    }
+
+                    @if (item.DeliveredDate.ToShortDateString().Contains("0001"))
+                    {
+                        <td style="width:100px !important;">
+                                <h4>
+                                    <span class="badge badge-info x3">@item.OrderStatus.Name</span>
+                                    <br />
+                                    <span class="badge badge-info x3">@item.CreatedOn.Value.ToShortDateString()</span>
+                                </h4>
+                                <span>@Html.Raw(item.CurrentStatus)</span>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <span class="badge" style="background-color:green;color:white">@item.OrderStatus.Name</span>
+                            <br />
+                            <h3>
+                                <span class="badge" style="background-color:green;color:white">
+                                    @item.DeliveredDate.ToShortDateString()
+                                </span>
+                            </h3>
+                        </td>
+                    }
+                    @if (item.IsPrinted == true)
+                    {
+                        <td>
+                            <h4>
+                                <span class="badge badge-success">Printed</span>
+                            </h4>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <h4>
+                                <span class="badge badge-danger">Pending</span>
+                            </h4>
+                        </td>
+                    }
+                    <td>
+                        <div class="btn-group dropdown-split-info">
+                            <button type="button" class="btn btn-info" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="feather icon-menu" style="margin:0px !important;padding:0px !important"></i></button>
+                            <div class="dropdown-menu">
+
+                                <a class="dropdown-item waves-effect waves-light" href="/ReceiverList/OrderDetailPage/@item.Id" target="_blank">Detail</a>
+
+                                @*<a class="dropdown-item waves-effect waves-light" href="/ReceiverList/DownloadPdfPortrait/@item.Id" target="_blank">Print_Label_Portrait</a>*@
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item waves-effect waves-light" href="/ReceiverList/DownloadPdfLandScape/@item.Id" target="_blank">Print_Label_Landscape</a>
+
+                                <div class="dropdown-divider"></div>
+                                <button class="dropdown-item waves-effect waves-light" onclick="ShowReturnCancelModal(@item.Id)">Cancel</button>
+
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item waves-effect waves-light" href="/ReceiverList/TrackOrder/@item.Id" target="_blank" @*onclick="SendRequest(@item.Id)"*@>
+                                    Track
+                                </a>
+
+                            </div>
+                        </div>
+                    </td>
+
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" id="CancelReturnOrderModal">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Cancel Order
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formnote">
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label for="Remarks">Remarks</label>
+                            <textarea type="text" class="form-control" name="CancelRemarks" id="ReturnCancelRemarks" placeholder="Enter Cancel Remarks"></textarea>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="submit" class="btn btn-primary" onclick="CancelReturnOrder()">Cancel Order</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .ExportButtonMoving {
+        margin-bottom: 10px;
+        /*margin-left: 850px;
+        margin-bottom: 5px*/
+    }
+
+        .ExportButtonMoving span {
+            display: none;
+        }
+
+        .ExportButtonMoving:after {
+            content: 'Export to Excel';
+        }
+</style>
+
+<script>
+    $(function () {
+
+        var t = $('.ReturnsPaginationTable').DataTable({
+            searching: false,
+            paging: false,
+            //pageLength: false,
+            //info: false,
+            "columnDefs": [{
+                "searchable": false,
+                "orderable": false,
+                "targets": 0,
+            }],
+            "order": [[1, 'asc']],
+            scrollY: "400px",
+            dom: 'Bfrtip',
+            buttons: [
+                //'excelHtml5',
+                { extend: 'excel', className: 'btn btn-primary ExportButtonMoving' }
+            ],
+            //scrollX: true
+        });
+
+        t.on('draw.dt', function () {
+            var PageInfo = $('.ReturnsPaginationTable').DataTable().page.info();
+            t.column(0, { page: 'current' }).nodes().each(function (cell, i) {
+                cell.innerHTML = i + 1 + PageInfo.start;
+            });
+        });
+
+        $("#btnExcelExport").click(function (e) {
+            t.page.len(-1).draw();
+            window.open('data:application/vnd.ms-excel,' +
+                encodeURIComponent($('#ForExcelExport').parent().html()));
+            setTimeout(function () {
+                table.page.len(10).draw();
+            }, 1000)
+
+        });
+        //$(".ProcessedPaginationTable").dataTable();
+    })
+</script>
+
+<script>
+    //save forms processed
+    $("#save_RefbtnprocessedReturn").click(function () {
+
+        debugger
+
+        var customerarrayProcessed = [];
+
+        $('#Returnstable tr').each(function () {
+
+            var customerNameProcessed = $(this).find(".cref-nameProcessed").val();
+            var orderIdProcessed = $(this).find(".orderIdProcessed").val();
+
+            if (customerNameProcessed != null && orderIdProcessed != null) {
+                queryStr1 = { "Customer_Reference": customerNameProcessed, "Id": orderIdProcessed };
+                customerarrayProcessed.push(queryStr1);
+            }
+
+
+
+        });
+
+        //customerarrayProcessed.shift();
+        $.ajax({
+            type: 'POST',
+            url: '/ReceiverList/UpdateCustomerRefrenceProcessed',
+            data: { "model": customerarrayProcessed }
+        })
+            .done(function (response) {
+
+                swal("Customer References Added Suuccessfully!");
+
+                $("#Returns").trigger('click');
+
+                //window.location.reload();
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Fail")
+            });
+    });
+</script>
+
+<script>
+
+
+    var ID = 0;
+    ShowReturnCancelModal = function (Id) {
+        ID = Id;
+        $("#CancelReturnOrderModal").modal("show");
+    }
+
+
+
+    CancelReturnOrder = function () {
+        var remarks = $("#ReturnCancelRemarks").val();
+        if (remarks == null || remarks == "") {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Please select the required Field!',
+            });
+            return;
+        }
+        $.ajax({
+            type: "GET",
+            url: "/ReceiverList/CancelOrder?Id=" + ID + "&CancelRemarks=" + remarks,
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Succeeed...',
+                    text: 'Canceled Sucessfully',
+                });
+
+            },
+            error: function (result) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong please try again!',
+                })
+            }
+        });
+    };
+
+
+</script>
+
+<script>
+
+    $("#ReturnSearch").click(function () {
+        var data = $("#ReturnSearchForm").serialize();
+        $.ajax({
+            type: "POST",
+                url: '@Url.Action("FilterReturnOrder", "ReceiverList")',
+                data: data
+		    })
+            .done(function (response) {
+                $("#ReturnsPartialView").html(response);
+                ReturngetAllUniquePracticeId();
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                swal("Fail!");
+            });
+        });
+
+</script>
+
+<script>
+
+    function ReturngetAllUniquePracticeId() {
+        $.ajax({
+            type: "GET",
+            url: "/ReceiverList/GetAllUniquePracticeId",
+            dataType: "json",
+            success: function (result) {
+                $('#ReturnsearchDD').html('');
+                var rows1 = "<option value='' selected disabled > --Select PracticeId--</option >";
+                $('#ReturnsearchDD').append(rows1);
+
+                $.each(result, function (i, item) {
+                    var rows;
+                    rows = "<option value='" + item + "'>" + item + "</option>";
+                    $('#ReturnsearchDD').append(rows);
+                });
+            }
+        })
+    };
+    ReturngetAllUniquePracticeId();
+</script>
+
+<script>
+    $("#ReturnresetBtn").click(function () {
+          $.ajax({
+                url: '@Url.Action("ResetReturnOrdersSearch", "ReceiverList")',
+                beforeSend: function () {
+
+                },
+		    })
+            .done(function (response) {
+                debugger;
+                $("#ReturnsPartialView").html(response);
+                ReturngetAllUniquePracticeId();
+
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                swal("Fail");
+            });
+    });
+</script>

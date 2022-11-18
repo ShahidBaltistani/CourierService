@@ -1,0 +1,82 @@
+﻿@model CourierService.ViewModels.Orders.OrderLogViewModel
+@{
+    ViewBag.Title = "OrderDetailPage";
+}
+<tr>
+    <th>
+        <h3>
+            SendleRefrence----- <b>@Model.SendleRefrence</b>
+        </h3>
+    </th>
+</tr>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+
+            <th>Address</th>
+
+            <th>Customer_Reference</th>
+
+            <th>Delivered_Date</th>
+
+            <th>EHR</th>
+        </tr>
+
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Model.Order.Receiver.Name</td>
+
+            <td>
+                @Model.Order.Receiver.Address_Line2
+            </td>
+
+            <td>
+                @Model.Order.Customer_Reference
+            </td>
+
+            @if (Model.Order.DeliveredDate.ToShortDateString().Contains("0001"))
+            {
+                <td>
+                </td>
+            }
+            else
+            {
+                <td>
+                    <button class="btn btn-success" style="background-color:green">
+                        @Model.Order.DeliveredDate.ToShortDateString()
+                    </button>
+                </td>
+            }
+
+            <td>@Model.Receiver.EHR</td>
+        </tr>
+
+    </tbody>
+</table>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Phone No.</th>
+            <th> Created_On </th>
+            <th>Practice</th>
+        </tr>
+
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @Model.Order.Receiver.Phone
+            </td>
+            <td>
+                @Model.Order.CreatedOn.Value.ToShortDateString()
+            </td>
+            <td>
+                @Model.Order.PracticeId
+            </td>
+        </tr>
+
+    </tbody>
+</table>
+

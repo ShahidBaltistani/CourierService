@@ -1,0 +1,636 @@
+﻿@model CourierService.ViewModels.Orders.DashboardOrdersViewModel
+@{
+    ViewBag.Title = "Dashboard";
+}
+<div class="row">
+
+    <div class="col-md-12 col-xl-4">
+        <div class="card comp-card" style="height: 175px !important;background: #3f8580;">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h6 class="m-b-25" style="font-size: 20px !important; margin-top: 10px;color:white;">Pending Serial Assigning</h6>
+                        <h3 class="f-w-700 text-white">@Model.PendingSerialAssigning</h3>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-eye bg-c-blue" onclick="DeliveredList('pendingSerial')" style="margin-top: 28px;background: #59b3ad  !important;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12 col-xl-4">
+
+        <div class="card comp-card" style="height: 175px !important;background:#59b1ab;">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h6 class="m-b-25" style="font-size: 20px !important; margin-top: 10px; color:white;">Pending Task</h6>
+                        <h3 class="f-w-700 text-c-green" style="color:white;">@Model.PendingTask</h3>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-bullseye bg-c-green" onclick="DeliveredList('pendingTasks')" style="margin-top: 28px;background: #05ded0 !important;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-md-12 col-xl-4">
+
+        <div class="card comp-card" style="height: 175px !important;background:#6bd0c9;">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h6 class="m-b-25" style="font-size: 20px !important;margin-top: 10px;color:white;">In-Transit</h6>
+                        <h3 class="f-w-700 text-c-yellow" style="color:white;">@Model.InTransit</h3>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fa fa-quote-left bg-c-yellow" onclick="DeliveredList('inTransits')" style="margin-top: 28px;background:#02ab9f !important;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-xl-4">
+        <div class="card sale-card" style="height:auto;">
+            <div class="card-header">
+                <h5>Practices</h5>
+            </div>
+            <div class="card-block" id="UniquePracticsValues_2">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12 col-xl-8">
+        <div class="card sale-card">
+            <div class="card-header">
+                <h5>Orders Detail</h5>
+            </div>
+            <div class="card-block">
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group row">
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="datepicker5" class="col-form-label">From Date </label><span class="fromdateError" style="color:red"></span>
+                                    <input class="form-control datepickerpost fromdate" type="date" id="datepicker5" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="datepicker6" class="col-form-label">To Date </label><span class="todateError" style="color:red"></span>
+                                    <input class="form-control datepickerpost todate" type="date" id="datepicker6" />
+                                </div>
+
+                                @*<select name="select" onchange='PracticeCheck()' class="form-control" id="noOfDays" style="border: 1px solid #59b1ab; background: #deedfd91;">
+                                        <option value="Today" selected>Today</option>
+                                        <option value="Weekly">Weekly</option>
+                                        <option value="Monthly">Monthly</option>
+                                    </select>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 col-xl-6">
+                        <div class="card comp-card" style="height: 175px !important;background: #deedfd !important;">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <h6 class="m-b-25" style=" font-size: 22px !important; margin-top: 10px; text-align: center; font-weight: 600; color: #2bc495;">
+                                            Delivered Patients
+                                        </h6>
+                                        <h3 class="f-w-700 text-c-blue" style="color:black;text-align:center;" id="DeliveredPatients"></h3>
+
+                                    </div>
+                                    <div class="col-auto" id="Yesterday">
+                                        <i class="fa fa-users bg-c-blue" onclick="DeliveredList('delivered')" style="margin-top: 28px; background-color:#263544 !important;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 col-xl-6">
+                        <div class="card comp-card" style="height: 175px !important;background: #deedfd !important;">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <h6 class="m-b-25" style=" font-size: 22px !important; margin-top: 10px; text-align: center; font-weight: 600; color: #2bc495;">
+                                            New Device Orders
+                                        </h6>
+                                        <h3 class="f-w-700 text-c-blue" style="color:black;text-align:center;" id="newDeviceOrders"></h3>
+
+                                    </div>
+                                    <div class="col-auto" id="Today">
+                                        <i class="fa fa-desktop bg-c-blue" onclick="DeliveredList('rpdDevice')" style="margin-top: 28px; background-color:#263544 !important;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 col-xl-6">
+                        <div class="card comp-card" style="height: 175px !important;background: #deedfd !important;">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <h6 class="m-b-25" style=" font-size: 22px !important; margin-top: 10px; text-align: center; font-weight: 600; color: #2bc495;">
+                                            Asessories Orders
+                                        </h6>
+                                        <h3 class="f-w-700 text-c-blue" style="color:black;text-align:center;" id="asessoriesOrders"></h3>
+
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fa fa-cog bg-c-blue" onclick="DeliveredList('asessoriesDetails')" style="margin-top: 28px; background-color:#263544 !important;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 col-xl-6">
+                        <div class="card comp-card" style="height: 175px !important;background: #deedfd !important;">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <h6 class="m-b-25" style=" font-size: 22px !important; margin-top: 10px; text-align: center; font-weight: 600; color: #2bc495;">
+                                            Return Orders
+                                        </h6>
+                                        <h3 class="f-w-700 text-c-blue" style="color:black;text-align:center;" id="returnOrders"></h3>
+
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fa fa-reply-all bg-c-blue" onclick="DeliveredList('returnDetails')" style="margin-top: 28px; background-color:#263544 !important;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 col-xl-6">
+                        <div class="card comp-card" style="height: 175px !important;background: #deedfd !important;">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <h6 class="m-b-25" style=" font-size: 22px !important; margin-top: 10px; text-align: center; font-weight: 600; color: #2bc495;">
+                                            Replacement Orders
+                                        </h6>
+                                        <h3 class="f-w-700 text-c-blue" style="color:black;text-align:center;" id="replacementOrders"></h3>
+
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fa fa-retweet bg-c-blue" onclick="DeliveredList('replacementDetails')" style="margin-top: 28px; background-color:#263544 !important;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 col-xl-6">
+                        <div class="card comp-card" style="height: 175px !important;background: #deedfd !important;">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <h6 class="m-b-25" style=" font-size: 22px !important; margin-top: 10px; text-align: center; font-weight: 600; color: #2bc495;">
+                                            Cancel Orders
+                                        </h6>
+                                        <h3 class="f-w-700 text-c-blue" style="color:black;text-align:center;" id="cancelOrders"></h3>
+
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fa fa-trash bg-c-blue" onclick="DeliveredList('canceledDetails')" style="margin-top: 28px; background-color:#263544 !important;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    .circle-tile {
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    .circle-tile-heading {
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-radius: 100%;
+        color: #FFFFFF;
+        height: 80px;
+        margin: 0 auto -40px;
+        position: relative;
+        transition: all 0.3s ease-in-out 0s;
+        width: 80px;
+    }
+
+        .circle-tile-heading .fa {
+            line-height: 80px;
+        }
+
+    .circle-tile-content {
+        padding-top: 50px;
+    }
+
+    .circle-tile-number {
+        font-size: 26px;
+        font-weight: 700;
+        line-height: 1;
+        padding: 5px 0 15px;
+    }
+
+    .circle-tile-description {
+        text-transform: uppercase;
+        font-weight: bold
+    }
+
+    .circle-tile-footer {
+        background-color: rgba(0, 0, 0, 0.1);
+        color: rgba(255, 255, 255, 0.5);
+        display: block;
+        padding: 5px;
+        transition: all 0.3s ease-in-out 0s;
+    }
+
+        .circle-tile-footer:hover {
+            background-color: rgba(0, 0, 0, 0.2);
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+        }
+
+    .circle-tile-heading.dark-blue:hover {
+        background-color: #2E4154;
+    }
+
+    .circle-tile-heading.green:hover {
+        background-color: #138F77;
+    }
+
+    .circle-tile-heading.orange:hover {
+        background-color: #DA8C10;
+    }
+
+    .circle-tile-heading.blue:hover {
+        background-color: #2473A6;
+    }
+
+    .circle-tile-heading.red:hover {
+        background-color: #CF4435;
+    }
+
+    .circle-tile-heading.purple:hover {
+        background-color: #7F3D9B;
+    }
+
+    .tile-img {
+        text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.9);
+    }
+
+    .dark-blue {
+        background-color: #2ed8b6;
+    }
+
+    .green {
+        background-color: #16A085;
+    }
+
+    .blue {
+        background-color: #2980B9;
+    }
+
+    .orange {
+        background-color: #F39C12;
+    }
+
+    .red {
+        background-color: #263544;
+    }
+
+    .purple {
+        background-color: #8E44AD;
+    }
+
+    .dark-gray {
+        background-color: #7F8C8D;
+    }
+
+    .gray {
+        background-color: #95A5A6;
+    }
+
+    .light-gray {
+        background-color: #BDC3C7;
+    }
+
+    .yellow {
+        background-color: #F1C40F;
+    }
+
+    .text-dark-blue {
+        color: #263544;
+    }
+
+    .text-green {
+        color: #16A085;
+    }
+
+    .text-blue {
+        color: #2980B9;
+    }
+
+    .text-orange {
+        color: #F39C12;
+    }
+
+    .text-red {
+        color: #E74C3C;
+    }
+
+    .text-purple {
+        color: #8E44AD;
+    }
+
+    .text-faded {
+        color: rgba(255, 255, 255, 0.7);
+    }
+</style>
+
+<div class="modal fade" id="mydetailModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div id="OverAllOrders"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<img src="~/Content/Images/PdfMergingLoader.gif" id="PdfMergingLoader" style="display:none" />
+
+<style>
+    #PdfMergingLoader {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        z-index: 9999;
+    }
+</style>
+
+@section scripts {
+    <script>
+        window.onload = function () {
+
+            var now = new Date();
+            var day = ("0" + now.getDate()).slice(-2);
+            var month = ("0" + (now.getMonth() + 1)).slice(-2);
+            var today = now.getFullYear() + "-" + (month) + "-" + (day);
+            $('.fromdate').val(today);
+            $('.todate').val(today);
+
+
+
+            DynamicList();
+        };
+        function DynamicList() {
+
+
+
+            $.ajax({
+                type: "GET",
+                url: "/ReceiverList/GetAllUniquePracticeId",
+                dataType: "json",
+                beforeSend: function () {
+                    $("#PdfMergingLoader").show();
+                },
+                complete: function () {
+                    $("#PdfMergingLoader").hide();
+                },
+                success: function (result) {
+                    $('#UniquePracticsValues_2').html('');
+
+
+                    Staticrow = "<div class='checkbox-fade fade-in-info'>" +
+                        "<label style='margin-bottom:25px !important;'>" +
+                        "<input type='checkbox' checked class='check' onchange='CheckAll()' id='checkall' >" +
+                        "<span class='cr'>" +
+                        "<i class='cr-icon icofont icofont-ui-check txt-success' style='padding: 1px;'></i>" +
+                        "</span>" +
+                        "<span style='font-size:20px;font-weight:500;'>All" + "</span>" +
+                        "</label>" +
+                        "</div>"
+                    $('#UniquePracticsValues_2').append(Staticrow);
+
+                    $.each(result, function (i, item) {
+                        var rows;
+
+                        rows = "<div class='border-checkbox-group border-checkbox-group-success'>" +
+                            "<input class='border-checkbox checkboxinput cb-element check' checked name='type' type='checkbox' value='" + item + "' onclick='PracticeCheck()' id='" + item + "'>" +
+                            "<label class='border-checkbox-label checkboxlbl' for='" + item + "'>" + item + "</label>" +
+                            "</div><br />"
+                        $('#UniquePracticsValues_2').append(rows);
+                    });
+                }
+            });
+        };
+    </script>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url:" @Url.Action("PracticeSelectionOnSelection", "Home") ",
+                type: 'POST',
+                traditional: true,
+                success: function (result) {
+                    $("#DeliveredPatients").text(result.DeliveredPatients);
+                    $("#newDeviceOrders").text(result.newDeviceOrders);
+                    $("#asessoriesOrders").text(result.asessoriesOrders);
+                    $("#returnOrders").text(result.returnOrders);
+                    $("#replacementOrders").text(result.replacementOrders);
+                    $("#cancelOrders").text(result.cancelOrders);
+                }
+            });
+        });
+    </script>
+    <script>
+
+        function chkblnkGeneral(eid, errid) {
+            var x = $(eid).val();
+            if (x == "") {
+                $(errid).text(" is required");
+                return false;
+            } else {
+                $(errid).text("");
+                return true;
+            }
+        }
+        $('.fromdate').on("blur", function () {
+            chkblnkGeneral(".fromdate", ".fromdateError");
+            chkblnkGeneral(".todate", ".todateError");
+        });
+        $('.fromdate').on("change", function () {
+            $(".todate").val("");
+        });
+
+        $('.todate').on("change", function () {
+
+            var fromres = chkblnkGeneral(".fromdate", ".fromdateError");
+            var tores = chkblnkGeneral(".todate", ".todateError");
+
+            if (fromres == true && tores == true) {
+
+                var fdate = $(".fromdate").val();
+                var tdate = $(".todate").val();
+
+                var fromdate = new Date($(".fromdate").val());
+                var todate = new Date($(".todate").val());
+
+                if (fromdate <= todate) {
+
+                    PracticeSelection(fdate, tdate);
+
+                }
+                else {
+                    $(".todateError").text(" From date is less than to date");
+                    $(".fromdate").val("");
+                    $(".todate").val("");
+                }
+            } else {
+                return false;
+            }
+        });
+        PracticeCheck = function () {
+
+            var fdate = $(".fromdate").val();
+            var tdate = $(".todate").val();
+
+            PracticeSelection(fdate, tdate);
+        }
+        CheckAll = function () {
+
+            var fdate = $(".fromdate").val();
+            var tdate = $(".todate").val();
+
+            if ($('.cb-element').prop("checked") == true) {
+
+                $('.cb-element').prop('checked', false);
+                PracticeSelection(fdate, tdate);
+
+            } else {
+
+                $('.cb-element').prop('checked', true);
+
+                PracticeSelection(fdate, tdate);
+            }
+        }
+
+        function PracticeSelection(fromdate,todate) {
+
+            var list = [];
+            var totalLength = $("input:checkbox[name=type]").length;
+
+
+
+            $("input:checkbox[name=type]:checked").each(function () {
+
+                list.push($(this).val());
+            });
+            var checkedLength = list.length;
+
+            if (checkedLength == totalLength) {
+                $('#checkall').prop('checked', true);
+            }
+            else {
+                $('#checkall').prop('checked', false);
+            }
+            var data = {
+            fromdate:fromdate,
+            todate : todate,
+            //days: $("#noOfDays").val(),
+            list: list
+            };
+            console.log(data);
+
+            $.ajax({
+                url:" @Url.Action("PracticeSelection","Home") ",
+                type: 'POST',
+                traditional: true,
+                data: data,
+                beforeSend: function () {
+                    $("#PdfMergingLoader").show();
+                },
+                complete: function () {
+                    $("#PdfMergingLoader").hide();
+                },
+                success: function (result) {
+                    $("#DeliveredPatients").text(result.DeliveredPatients);
+                    $("#newDeviceOrders").text(result.newDeviceOrders);
+                    $("#asessoriesOrders").text(result.asessoriesOrders);
+                    $("#returnOrders").text(result.returnOrders);
+                    $("#replacementOrders").text(result.replacementOrders);
+                    $("#cancelOrders").text(result.cancelOrders);
+                }
+            });
+        }
+
+
+        DeliveredList = function (delivered) {
+
+
+            var fdate = $(".fromdate").val();
+            var tdate = $(".todate").val();
+
+
+             var list = [];
+            $("input:checkbox[name=type]:checked").each(function () {
+                list.push($(this).val());
+            });
+            var data = {
+            Id: delivered,
+            fromdate: fdate,
+            todate: tdate,
+            //days: $("#noOfDays").val(),
+            list: list
+            };
+            $.ajax({
+                url:" @Url.Action("DashboardDetails", "Home") ",
+                type: 'POST',
+                traditional: true,
+                data: data,
+                beforeSend: function () {
+                    $("#PdfMergingLoader").show();
+                },
+                complete: function () {
+                    $("#PdfMergingLoader").hide();
+                },
+
+                success: function (result) {
+                    debugger
+                    $("#mydetailModal").modal("show");
+                    $("#OverAllOrders").html(result);
+
+                }
+            });
+        }
+    </script>
+
+}

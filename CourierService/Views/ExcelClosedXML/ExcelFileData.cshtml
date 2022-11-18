@@ -1,0 +1,228 @@
+﻿@{
+    ViewBag.Title = "ExcelFileData";
+}
+<style>
+    table {
+        display: block;
+        overflow: scroll;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-2" style="margin-bottom:10px;">
+            <select class="form-control" id="deviceTypeDD">
+            </select>
+        </div>
+        <div class="col-lg-2" style="margin-bottom:10px;">
+            <select class="form-control" id="sourceDD">
+            </select>
+        </div>
+        <div class="col-lg-6" style="margin-bottom:10px;">
+        </div>
+        <div class="col-lg-2" style="margin-bottom:10px;">
+            <button type="button" class="btn btn-secondary" id="SubmittBtn">Save In Database</button>
+            @if (ViewBag.errorMessage == true)
+            {
+                <p style=" color: red">*duplicate entry accour please check</p>
+            }
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-12">
+            <table class="table table-bordered" id="table-information">
+                <thead>
+                    <tr>
+                        <th scope="col">Instructions</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Address Line1</th>
+                        <th scope="col">Address Line2</th>
+                        <th scope="col">Suburb</th>
+                        <th scope="col">Postcode</th>
+                        <th scope="col">State Name</th>
+                        <th scope="col">Country</th>
+                        <th scope="col">Customer_Reference</th>
+                        <th scope="col">Practice_Id</th>
+                        <th scope="col">EHR</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in ViewBag.orders)
+                    {
+
+                        <tr id="">
+                            <td><input type="text" name="desc" value="@item.Receiver.Instructions" /></td>
+                            @if (item.IsExist == true)
+                            {
+                                <td><input type="text" class="name" value="@item.Receiver.Name" style="border: 2px solid red" onfocus="test()" id="receiverName" /></td>
+                            }
+                            else
+                            {
+                                <td><input type="text" value="@item.Receiver.Name" /></td>
+
+                            }
+                            <td><input type="text" value="@item.Receiver.Email" /></td>
+                            <td><input type="text" name="phone" value="@item.Receiver.Phone" /></td>
+                            <td><input type="text" value="@item.Receiver.Address_Line1" /></td>
+                            @if (item.IsExist == true)
+                            {
+                                <td><input type="text" class="name" name="address" value="@item.Receiver.Address_Line2" style="border: 2px solid red" /></td>
+                            }
+                            else
+                            {
+                                <td><input type="text" value="@item.Receiver.Address_Line2" /></td>
+
+                            }
+                            <td><input type="text" value="@item.Receiver.Suburb" /></td>
+                            <td><input type="text" value="@item.Receiver.Postcode" /></td>
+                            <td><input type="text" value="@item.Receiver.State_Name" /></td>
+                            <td><input type="text" value="@item.Receiver.Country" /></td>
+                            <td><input type="text" value="@item.Customer_Reference" /></td>
+                            <td><input type="text" value="@item.PracticeId" /></td>
+                            <td><input type="text" value="@item.Receiver.EHR" /></td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('#SubmittBtn').click(function () { PostList(); });
+
+
+
+            $.ajax({
+                type: "GET",
+                url: "/ExcelClosedXML/SourceDropdown",
+                dataType: "json",
+                success: function (result) {
+                    $('#sourceDD').html('');
+                    var rows1 = "<option value='' selected disabled > --Select Source--</option >";
+                    $('#sourceDD').append(rows1);
+
+                    $.each(result, function (i, item) {
+                        var rows;
+                        rows = "<option value='" + item.Id + "'>" + item.Name + "</option>";
+                        $('#sourceDD').append(rows);
+                    });
+                }
+            })
+
+            $.ajax({
+                type: "GET",
+                url: "/ExcelClosedXML/DeviceTypeDropdown",
+                dataType: "json",
+                success: function (result) {
+                    $('#deviceTypeDD').html('');
+                    var rows1 = "<option value='' selected disabled > --Select DeviceType--</option >";
+                    $('#deviceTypeDD').append(rows1);
+
+                    $.each(result, function (i, item) {
+                        var rows;
+                        rows = "<option value='" + item.Id + "'>" + item.Name + "</option>";
+                        $('#deviceTypeDD').append(rows);
+                    });
+                }
+            })
+        });
+        function PostList() {
+
+            var SourceID = $("#sourceDD option:selected").val();
+            var DeviceTypeID = $("#deviceTypeDD option:selected").val();
+            if (SourceID == "" || DeviceTypeID == "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please select the required dropdowns!',
+                })
+
+                return;
+            }
+
+
+
+
+            var receivers = []; // list object
+            $('#table-information > tbody  > tr').each(function () {
+                debugger;
+                var receiver = {};
+                receiver.Receiver = {};
+                receiver.Receiver.Instructions = $(this).find("td:eq(0) input[type='text']").val();
+                receiver.Receiver.Name = $(this).find("td:eq(1) input[type='text']").val();
+                receiver.Receiver.Email = $(this).find("td:eq(2) input[type='text']").val();
+                receiver.Receiver.Phone = $(this).find("td:eq(3) input[type='text']").val();
+                receiver.Receiver.Address_Line1 = $(this).find("td:eq(4) input[type='text']").val();
+                receiver.Receiver.Address_Line2 = $(this).find("td:eq(5) input[type='text']").val();
+                receiver.Receiver.Suburb = $(this).find("td:eq(6) input[type='text']").val();
+                receiver.Receiver.Postcode = $(this).find("td:eq(7) input[type='text']").val();
+                receiver.Receiver.State_Name = $(this).find("td:eq(8) input[type='text']").val();
+                receiver.Receiver.Country = $(this).find("td:eq(9) input[type='text']").val();
+                receiver.Customer_Reference = $(this).find("td:eq(10) input[type='text']").val();
+                receiver.PracticeId = $(this).find("td:eq(11) input[type='text']").val();
+                receiver.Receiver.EHR = $(this).find("td:eq(12) input[type='text']").val();
+
+                receiver.SourceId = SourceID;
+                receiver.DeviceTypeId = DeviceTypeID;
+
+
+                receivers.push(receiver);
+            });
+
+
+            $.ajax({
+                url: '/ImportData/OrdersListSave',
+                type: "POST",
+                data: JSON.stringify(receivers),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+
+
+                    if (response.result == false) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: '' + response.text + '',
+                        })
+                    } else {
+                        window.location.href = ("/InProcess/InProcessOrders")
+
+                    }
+                }
+            });
+        }
+
+        $(".name").keyup(function () {
+            var Name = $(this).closest('tr').find("td:eq(1) input[type='text']");
+            var Address = $(this).closest('tr').find("td:eq(5) input[type='text']");
+            var res = { name: Name.val(), address: Address.val() }
+
+            $.ajax({
+                url: '/ImportData/IsExist',
+                type: "POST",
+                data: JSON.stringify(res),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response == true) {
+                        Name.closest('tr').find("td:eq(1) input[type='text']").css('border', "1px solid red");
+                        Address.closest('tr').find("td:eq(5) input[type='text']").css('border', "1px solid red");
+                    }
+                    else {
+                        Name.closest('tr').find("td:eq(1) input[type='text']").css('border', "1px solid gray");
+                        Address.closest('tr').find("td:eq(5) input[type='text']").css('border', "1px solid gray");
+
+                    }
+                }
+            });
+        });
+    </script>
+}

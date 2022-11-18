@@ -1,0 +1,84 @@
+﻿@{
+    ViewBag.Title = "UploadExcel";
+}
+
+<style>
+    table {
+        display: block;
+        overflow: scroll;
+    }
+</style>
+<div class="col-lg-6" style="margin-bottom:10px;">
+    <button type="button" class="btn btn-secondary" id="SubmittBtn">
+        Export
+    </button>
+    @if (ViewBag.errorMessage == true)
+    {
+        <p style=" color: red">*duplicate entry accour please check</p>
+    }
+</div>
+<div class="container">
+    <div class="row">
+
+        <div class="col-12">
+            <table class="table table-bordered" id="table-information">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Address Line2</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in ViewBag.orders)
+                    {
+
+                        <tr id="">
+                            @if (item.IsExist == true)
+                            {
+                                <td><input type="text" class="name" value="@item.Receiver.Name" style="border: 2px solid red" onfocus="test()" id="receiverName" /></td>
+                            }
+                            @if (item.IsExist == true)
+                            {
+                                <td><input type="text" class="name" name="address" value="@item.Receiver.Address_Line2" style="border: 2px solid red" /></td>
+                            }
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+
+        $(document).ready(function () {
+            $('#SubmittBtn').click(function () { PostList(); });
+        });
+        function PostList() {
+            var receivers = []; // list object
+            $('#table-information tbody tr').each(function () {
+                debugger;
+                var receiver = {};
+                receiver.Receiver = {};
+                receiver.Receiver.Name = $(this).find("td:eq(0) input[type='text']").val();
+                receiver.Receiver.Address_Line2 = $(this).find("td:eq(1) input[type='text']").val();
+                receivers.push(receiver);
+            });
+
+
+            $.ajax({
+                url: '/Verification/ExportToExcel',
+                type: "POST",
+                data: JSON.stringify(receivers),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    alert(response)
+                }
+            });
+        }
+    </script>
+}
+

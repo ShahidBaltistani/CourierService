@@ -1,0 +1,237 @@
+﻿<script src="~/Content/DataTables (1)/datatables.min.js"></script>
+<link href="~/Content/DataTables (1)/datatables.min.css" rel="stylesheet" />
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.print.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/dataTables.buttons.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.semanticui.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.jqueryui.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.html5.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.foundation.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.flash.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.colVis.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.bootstrap4.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.bootstrap.min.js"></script>
+
+<link href="~/Content/DataTables (1)/Buttons-1.6.5/css/buttons.bootstrap.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/Buttons-1.6.5/css/buttons.bootstrap4.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/Buttons-1.6.5/css/buttons.dataTables.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/Buttons-1.6.5/css/buttons.foundation.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/Buttons-1.6.5/css/buttons.jqueryui.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/Buttons-1.6.5/css/buttons.semanticui.min.css" rel="stylesheet" />
+
+
+<link href="~/Content/DataTables (1)/SearchPanes-1.2.2/css/searchPanes.bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/SearchPanes-1.2.2/css/searchPanes.bootstrap4.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/SearchPanes-1.2.2/css/searchPanes.dataTables.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/SearchPanes-1.2.2/css/searchPanes.foundation.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/SearchPanes-1.2.2/css/searchPanes.jqueryui.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/SearchPanes-1.2.2/css/searchPanes.semanticui.min.css" rel="stylesheet" />
+
+<script src="~/Content/DataTables (1)/SearchPanes-1.2.2/js/dataTables.searchPanes.min.js"></script>
+<script src="~/Content/DataTables (1)/SearchPanes-1.2.2/js/searchPanes.bootstrap.min.js"></script>
+<script src="~/Content/DataTables (1)/SearchPanes-1.2.2/js/searchPanes.bootstrap4.min.js"></script>
+<script src="~/Content/DataTables (1)/SearchPanes-1.2.2/js/searchPanes.dataTables.min.js"></script>
+<script src="~/Content/DataTables (1)/SearchPanes-1.2.2/js/searchPanes.foundation.min.js"></script>
+<script src="~/Content/DataTables (1)/SearchPanes-1.2.2/js/searchPanes.jqueryui.min.js"></script>
+<script src="~/Content/DataTables (1)/SearchPanes-1.2.2/js/searchPanes.semanticui.min.js"></script>
+
+
+
+@model IEnumerable<CourierService.ViewModels.Orders.OrderViewModel>
+@using System.Globalization
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<form id="CancelledSearchForm">
+    <div class="row">
+        <div class="col-sm-2">
+            <input class="form-control" value="" id="" name="Receiver.Name" placeholder="Name" style="margin-top: 30px;height: 45px;" />
+        </div>
+        <div class="col-sm-2">
+            <input class="form-control" id="" name="Receiver.Address_Line2" placeholder="Address_Line2" style="margin-top: 30px;height: 45px;" />
+        </div>
+        <div class="col-sm-2" style="margin-top: 30px;">
+            <select id="CancelledsearchDD" class=" js-example-basic-single" name="PracticeId" style="height: 45px; width: 178px;">
+            </select>
+
+        </div>
+        <div class="col-sm-2">
+            <input class="form-control" id="" name="Customer_Reference" placeholder="Customer_Reference" style="margin-top: 30px;height: 45px;" />
+        </div>
+        <div class="col-sm-2">
+            <input class="form-control datepickerpost" name="CreatedOn" type="date" id="datepicker-5" style="margin-top: 30px; height: 45px;" />
+        </div>
+    </div>
+</form>
+<div class="row">
+    <div class="col-lg-3">
+        <div class="btn-group " role="group" data-toggle="tooltip" data-placement="top" title="" data-original-title=".btn-xlg" style="margin-top:30px;width: 100%;display: flex !important;">
+            <button type="button" class="btn btn-primary btn-md waves-effect waves-light " id="CancelledSearch" style=" border-radius: 50px 0px 0px 50px;">Search</button>
+            <button type="button" class="btn btn-danger btn-md waves-effect waves-light resetBtn" id="CancelledresetBtn" style="border-radius: 0px 50px 50px 0px; margin-left: 2px;">Reset</button>
+        </div>
+
+    </div>
+    <div class="col-lg-3"></div>
+    <div class="col-lg-3"></div>
+    <div class="col-lg-3"></div>
+
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover CancelledPaginationTable" id="Cancelledtable" style="overflow-x: scroll;">
+        <thead style="background:#eaefef">
+            <tr>
+                <th>#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Address</th>
+                <th scope="col">Status</th>
+                <th scope="col" class="CreatedOnForSorting">Order Status</th>
+            </tr>
+        </thead>
+        <tbody class="CancelledPaginationbody">
+            @foreach (var item in Model)
+            {
+                <tr id=@item.Id class="CancelledPaginationRow">
+
+                    <td></td>
+
+                    <td>@item.Receiver.Name</td>
+
+                    <td>@(item.Receiver.Address_Line2==null ? item.Receiver.Address_Line1 + item.Receiver.Suburb+ "," + item.Receiver.State_Name + " " + item.Receiver.Postcode: item.Receiver.Address_Line2)</td>
+
+                    <td>@item.OrderStatus.Name</td>
+
+                    <td class="statuschange">
+                        @item.CreatedOn.Value.ToShortDateString()
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .ExportButtonMoving {
+        margin-bottom: 10px;
+        /*margin-left: 850px;
+        margin-bottom: 5px*/
+    }
+
+        .ExportButtonMoving span {
+            display: none;
+        }
+
+        .ExportButtonMoving:after {
+            content: 'Export to Excel';
+        }
+</style>
+
+<script>
+    $(function () {
+
+        var t = $('.CancelledPaginationTable').DataTable({
+            searching: false,
+            info: true,
+            "columnDefs": [{
+                "searchable": false,
+                "orderable": false,
+                "targets": 0
+            }],
+            "order": [[1, 'asc']],
+            dom: 'Bfrtip',
+            buttons: [
+                { extend: 'excel', className: 'btn btn-primary ExportButtonMoving' }
+            ],
+        });
+
+        t.on('draw.dt', function () {
+            var PageInfo = $('.CancelledPaginationTable').DataTable().page.info();
+            t.column(0, { page: 'current' }).nodes().each(function (cell, i) {
+                cell.innerHTML = i + 1 + PageInfo.start;
+            });
+        });
+    })
+</script>
+
+<script>
+
+    $("#CancelledSearch").click(function () {
+
+        var data = $("#CancelledSearchForm").serialize();
+
+        $.ajax({
+            type: "POST",
+                url: '@Url.Action("FilterCanceledOrder", "ReceiverList")',
+                data: data
+                //beforeSend: function () {
+
+                //},
+		    })
+            .done(function (response) {
+                //debugger;
+                $("#CancelledPartialView").html(response);
+                CancelledgetAllUniquePracticeId();
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                swal("Fail!");
+            });
+
+
+            //$("#DeliveredPartialView").load('/CreatingOrders/DeliveredOrders');
+
+        });
+
+</script>
+
+
+
+
+
+<script>
+
+    function CancelledgetAllUniquePracticeId() {
+        $.ajax({
+            type: "GET",
+            url: "/ReceiverList/GetAllUniquePracticeId",
+            dataType: "json",
+            success: function (result) {
+                $('#CancelledsearchDD').html('');
+                var rows1 = "<option value='' selected disabled > --Select PracticeId--</option >";
+                $('#CancelledsearchDD').append(rows1);
+
+                $.each(result, function (i, item) {
+                    var rows;
+                    rows = "<option value='" + item + "'>" + item + "</option>";
+                    $('#CancelledsearchDD').append(rows);
+                });
+            }
+        })
+    };
+    CancelledgetAllUniquePracticeId();
+</script>
+
+
+
+<script>
+    //Reset Button
+    $(".resetBtn").click(function () {
+
+
+          $.ajax({
+                url: '@Url.Action("ResetCanceledOrdersSearch", "ReceiverList")',
+                beforeSend: function () {
+
+                },
+		    })
+            .done(function (response) {
+                debugger;
+                $("#CancelledPartialView").html(response);
+                CancelledgetAllUniquePracticeId();
+
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                swal("Fail");
+            });
+    });
+</script>

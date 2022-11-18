@@ -1,0 +1,98 @@
+﻿@model CourierService.ViewModels.Orders.OrderViewModel
+@{
+    ViewBag.Title = "UpdateProcessedOrders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <!-- Basic Form Inputs card start -->
+        <div class="card">
+            <div class="card-header">
+                <h5 style=" font-size: 25px !important;">Edit</h5>
+            </div>
+            <div class="card-block">
+                <form method="post" action="/ReceiverList/UpdateProcessedOrders">
+                    <input type="text" hidden name="Id" value="@Model.Id" class="form-control">
+                    <input type="text" hidden name="Receiver.Id" value="@Model.Receiver.Id" class="form-control">
+                    <input type="text" hidden name="ReceiverId" value="@Model.ReceiverId" class="form-control">
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Instructios</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="Receiver.Instructions" value="@Model.Receiver.Instructions" class="form-control">
+                        </div>
+                        <label class="col-sm-2 col-form-label">Name</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="Receiver.Name" value="@Model.Receiver.Name" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Email</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="Receiver.Email" value="@Model.Receiver.Email" class="form-control" placeholder="">
+                        </div>
+                        <label class="col-sm-2 col-form-label">Phone</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="Receiver.Phone" value="@Model.Receiver.Phone" class="form-control" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Address_Line 1</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="Receiver.Address_Line1" value="@Model.Receiver.Address_Line1" class="form-control" placeholder="">
+                        </div>
+                        <label class="col-sm-2 col-form-label">Address_Line 2</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="Receiver.Address_Line2" value="@Model.Receiver.Address_Line2" class="form-control" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Suburb</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="Receiver.Suburb" value="@Model.Receiver.Suburb" class="form-control" placeholder="">
+                        </div>
+                        <label class="col-sm-2 col-form-label">Postcode</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="Receiver.Postcode" value="@Model.Receiver.Postcode" class="form-control" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+
+                        <label class="col-sm-2 col-form-label">State_Name</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="Receiver.State_Name" value="@Model.Receiver.State_Name" class="form-control" placeholder="">
+                        </div>
+                        <label class="col-sm-2 col-form-label">Country</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="Receiver.Country" value="@Model.Receiver.Country" class="form-control" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+
+                        <label class="col-sm-2 col-form-label">Customer Refrence</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="Customer_Reference" value="@Model.Customer_Reference" class="form-control" placeholder="">
+                        </div>
+                        <label class="col-sm-2 col-form-label">PracticeId</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="PracticeId" value="@Model.PracticeId" class="form-control" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2"></label>
+                        <div class="col-sm-10">
+                            <button type="submit" class="btn btn-primary m-b-0">Edit</button>
+                            @* <button type="button" class="btn btn-primary m-b-0">Cancel</button>*@
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+

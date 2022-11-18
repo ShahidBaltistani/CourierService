@@ -1,0 +1,123 @@
+﻿@model CourierService.ViewModels.Orders.OrderViewModel
+@{
+    ViewBag.Title = "SingleOrder";
+}
+
+<form action="/OrderDeviceType/CreateSingleOrder" method="post">
+    <h2 class="col-md-4 offset-md-4 align-center">Create Single Order</h2>
+    <br />
+    <div class="col-md-4 offset-md-2 form-group">
+        <input type="text" class="form-control" name="Id" value="@Model.Id" id="Id" hidden>
+    </div>
+    <div class="row ">
+
+        <div class="col-md-4 offset-md-2 form-group">
+            <label for="exampleInputInstruction">Device Type</label>
+            <select class="form-control" id="deviceTypeDD" name="DeviceTypeId" required>
+            </select>
+        </div>
+        <div class="col-md-4 form-group">
+            <label for="exampleInputName">Source</label>
+            <select class="form-control" id="sourceDD" name="SourceId" required>
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 offset-md-2 form-group">
+            <label for="Address_line1">Name</label>
+            <input type="text" class="form-control" required id="Address_line1" name="Receiver.Name" aria-describedby="emailHelp" value="@Model.Receiver.Name">
+        </div>
+        <div class="col-md-4 form-group">
+            <label for="Address_Line2">Address_Line2</label>
+            <input type="text" class="form-control" required id="Address_Line2" name="Receiver.Address_Line2" placeholder="Enter Full Address" value="@Model.Receiver.Address_Line2">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 offset-md-2 form-group">
+            <label for="datepicker-5" class="col-form-label">Pick Date:</label>
+            <input class="form-control datepickerpost" required name="Pickup_Date" type="date" id="datepicker" style="width: 185px;height: 48px;" />
+        </div>
+     </div>
+
+        <div class="row">
+            <div class="col-md-4 offset-md-2 form-group">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+
+        </div>
+
+</form>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $("document").ready(function () {
+
+
+        $.ajax({
+            type: "GET",
+            url: "/ExcelClosedXML/SourceDropdown",
+            dataType: "json",
+            success: function (result) {
+                $('#sourceDD').html('');
+                var rows1 = "<option value='' selected disabled > --Select Source--</option >";
+                $('#sourceDD').append(rows1);
+
+                $.each(result, function (i, item) {
+                    var rows;
+                    rows = "<option value='" + item.Id + "'>" + item.Name + "</option>";
+                    $('#sourceDD').append(rows);
+                });
+            }
+        })
+
+        $.ajax({
+            type: "GET",
+            url: "/ExcelClosedXML/DeviceTypeDropdown",
+            dataType: "json",
+            success: function (result) {
+                $('#deviceTypeDD').html('');
+                //var rows1 = "<option value='' selected disabled > --Select DeviceType--</option >";
+                //$('#deviceTypeDD').append(rows1);
+
+                $.each(result, function (i, item) {
+
+
+
+                    if (item.Id == "@ViewBag.Tab") {
+                        var rows;
+                        rows = "<option value='" + item.Id + "'>" + item.Name + "</option>";
+                        $('#deviceTypeDD').append(rows);
+                    }
+
+                    // For All..
+
+                    if ("@ViewBag.Tab"=="") {
+                        var rows_1;
+                        rows_1 = "<option value='" + item.Id + "'>" + item.Name + "</option>";
+                        $('#deviceTypeDD').append(rows_1);
+                    }
+
+                    //var rows;
+                    //rows = "<option value='" + item.Id + "'>" + item.Name + "</option>";
+                    //$('#deviceTypeDD').append(rows);
+                });
+            }
+        })
+
+        $.ajax({
+            type: "GET",
+            url: "/ReceiverList/GetAllUniquePracticeId",
+            dataType: "json",
+            success: function (result) {
+                $('#searchDD').html('');
+                var rows1 = "<option value='' selected disabled > --Select PracticeId--</option >";
+                $('#searchDD').append(rows1);
+
+                $.each(result, function (i, item) {
+                    var rows;
+                    rows = "<option value='" + item + "'>" + item + "</option>";
+                    $('#searchDD').append(rows);
+                });
+            }
+        })
+    });
+</script>

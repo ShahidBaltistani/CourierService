@@ -1,0 +1,140 @@
+﻿<script src="~/Content/DataTables (1)/datatables.min.js"></script>
+<link href="~/Content/DataTables (1)/datatables.min.css" rel="stylesheet" />
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.print.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/dataTables.buttons.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.semanticui.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.jqueryui.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.html5.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.foundation.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.flash.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.colVis.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.bootstrap4.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.bootstrap.min.js"></script>
+
+<link href="~/Content/DataTables (1)/Buttons-1.6.5/css/buttons.bootstrap.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/Buttons-1.6.5/css/buttons.bootstrap4.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/Buttons-1.6.5/css/buttons.dataTables.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/Buttons-1.6.5/css/buttons.foundation.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/Buttons-1.6.5/css/buttons.jqueryui.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/Buttons-1.6.5/css/buttons.semanticui.min.css" rel="stylesheet" />
+
+
+<link href="~/Content/DataTables (1)/SearchPanes-1.2.2/css/searchPanes.bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/SearchPanes-1.2.2/css/searchPanes.bootstrap4.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/SearchPanes-1.2.2/css/searchPanes.dataTables.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/SearchPanes-1.2.2/css/searchPanes.foundation.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/SearchPanes-1.2.2/css/searchPanes.jqueryui.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/SearchPanes-1.2.2/css/searchPanes.semanticui.min.css" rel="stylesheet" />
+
+<script src="~/Content/DataTables (1)/SearchPanes-1.2.2/js/dataTables.searchPanes.min.js"></script>
+<script src="~/Content/DataTables (1)/SearchPanes-1.2.2/js/searchPanes.bootstrap.min.js"></script>
+<script src="~/Content/DataTables (1)/SearchPanes-1.2.2/js/searchPanes.bootstrap4.min.js"></script>
+<script src="~/Content/DataTables (1)/SearchPanes-1.2.2/js/searchPanes.dataTables.min.js"></script>
+<script src="~/Content/DataTables (1)/SearchPanes-1.2.2/js/searchPanes.foundation.min.js"></script>
+<script src="~/Content/DataTables (1)/SearchPanes-1.2.2/js/searchPanes.jqueryui.min.js"></script>
+<script src="~/Content/DataTables (1)/SearchPanes-1.2.2/js/searchPanes.semanticui.min.js"></script>
+
+@model IEnumerable<CourierService.ViewModels.Orders.OrderViewModel>
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <!-- Tab variant tab card start -->
+        <div class="card">
+            <div class="card-header">
+
+                <div class="row">
+                    <div class="col-sm-8">
+                        <h5 style="font-size: 25px !important;">@ViewBag.PartialHeading</h5>
+                    </div>
+                    <div class="col-sm-2">
+                        <h1><span class="badge badge-secondary">@Model.Count()</span></h1>
+                    </div>
+                    <div class="col-sm-2">
+                    </div>
+                </div>
+                <div class="card-block tab-icon">
+                    <!-- Row start -->
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <div class="table-responsive">
+                                <table class="table table-hover" style="overflow-x: scroll;" id="DashboardOrders">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Name
+                                            </th>
+                                            <th>
+                                                Address
+                                            </th>
+                                            <th>
+                                                Practice
+                                            </th>
+                                            <th>
+                                                Created_On
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @item.Receiver.Name
+                                                </td>
+                                                <td>
+                                                    @item.Receiver.Address_Line2
+                                                </td>
+                                                <td>
+                                                    @item.PracticeId
+                                                </td>
+                                                @if (item.CreatedOn == null)
+                                                {
+                                                    <td>
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        @item.CreatedOn.Value.ToShortDateString()
+                                                    </td>
+                                                }
+
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- Row end -->
+                </div>
+            </div>
+            <!-- Tab variant tab card start -->
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+
+        var t = $('#DashboardOrders').DataTable({
+            searching: true,
+            paging: true,
+            pageLength: 5,
+            info: false,
+            "columnDefs": [{
+                "searchable": false,
+                "orderable": false,
+                "targets": 0,
+            }],
+            "order": [[1, 'asc']],
+            dom: 'Bfrtip',
+            buttons: [
+                { extend: 'excel', className: 'btn btn-primary' }
+            ],
+        });
+    })
+</script>
+

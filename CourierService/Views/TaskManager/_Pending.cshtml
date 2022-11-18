@@ -1,0 +1,398 @@
+﻿@model IEnumerable<CourierService.ViewModels.DTOForTaskManagements.TaskMailDTOViewModel>
+<div class="">
+    <form id="PendingTaskSearchForm">
+        <div class="row">
+            <div class="col-sm-2">
+                <input class="form-control" value="" id="" name="PatientName" placeholder="Patient Name" style="margin-top: 30px;height: 45px;" />
+            </div>
+            <div class="col-sm-2" style="margin-top: 30px;">
+                <select id="PatientClinic" class=" js-example-basic-single" name="PatientClinic" style="height: 45px; width: 178px;">
+                </select>
+
+            </div>
+            <div class="col-sm-2">
+                <input class="form-control" id="" name="PatientAddress" placeholder="Patient Address" style="margin-top: 30px;height: 45px;" />
+            </div>
+            <div class="col-sm-2">
+                <input class="form-control" id="" name="SendleRefrence" placeholder="Sendle Refrence" style="margin-top: 30px;height: 45px;" />
+            </div>
+
+            <div class="col-sm-2">
+                <input class="form-control" id="" name="TaskMail.From" placeholder="Email From" style="margin-top: 30px;height: 45px;" />
+            </div>
+            <div class="col-sm-2">
+                <input class="form-control datepickerpost" name="TaskMail.ReceivedDate" type="date" id="datepicker-5" style="margin-top: 30px; height: 45px;" />
+            </div>
+        </div>
+
+    </form>
+    <div class="row mb-2">
+        <div class="col-lg-3">
+            <div class="btn-group " role="group" data-toggle="tooltip" data-placement="top" title="" data-original-title=".btn-xlg" style="margin-top:30px;width: 100%;display: flex !important;">
+                <button type="button" class="btn btn-primary btn-md waves-effect waves-light " id="PendingTaskSearch" style=" border-radius: 50px 0px 0px 50px;">Search</button>
+                <button type="button" class="btn btn-danger btn-md waves-effect waves-light resetBtn" id="resetPendingTaskBtn" style="border-radius: 0px 50px 50px 0px; margin-left: 2px;">Reset</button>
+            </div>
+
+        </div>
+        <div class="col-lg-3"></div>
+        <div class="col-lg-3"></div>
+        <div class="col-lg-3"></div>
+
+    </div>
+    <table class="table table-hover">
+        <tbody>
+
+
+            @if (Model.Count() == 0)
+            {
+                <tr>
+                    <td colspan="6" style="text-align:center;font-size:20px;font-weight:bold;">
+                        No Tasks...
+                    </td>
+                </tr>
+            }
+            else
+            {
+                foreach (var item in Model)
+                {
+
+                    if (item.IsCompleted != true)
+                    {
+
+
+                        var x = 0;
+                        if (x != item.Id)
+                        {
+                            <tr style="background-color:#e9e7e7">
+                                <td style="font-size:20px;font-weight:600">
+                                    @item.From
+                                </td>
+                                <td style="font-size:20px;font-weight:600">
+                                    @item.Subject
+                                </td>
+                                <td style="font-size:20px;font-weight:600">
+                                    @item.Date
+                                </td>
+                                <td>
+                                    <a @*onclick="return confirm('Are you sure?')"*@ onclick="DeleteMail(@item.Id)" class="btn btn-danger btn-sm" @*href="/TaskManager/DeleteMail/@item.Id"*@ style=" border-radius: 50px;">Delete Mail</a>
+                                </td>
+                                <td>
+                                    <a onclick="CompleteAllStatus(@item.Id)" class="btn btn-info btn-sm" style=" border-radius: 50px;">Complete All Task</a>
+                                </td>
+                                <td colspan="3">
+                                    <button class="btn btn-primary" onclick="TaskDetailModel(@item.Id)" style=" height: auto; padding-left: 30px; padding-right: 30px; border-radius: 50px;">Add Tasks</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="12" style="border:1px solid lightgray;height:5px">
+                                    @item.Description
+                                </td>
+                            </tr>
+
+
+                            x = item.Id;
+                        }
+
+                        <tr>
+                            <th>Patient_Name</th>
+                            <th>Patient_Address</th>
+                            <th>Patient_Clinic</th>
+                            <th>Remarks</th>
+                            <th>Update Sendle Reference</th>
+                            <th>Task</th>
+                            <th>Action</th>
+                        </tr>
+
+                    }
+
+
+                    foreach (var item_1 in item.TaskDetails)
+                    {
+
+                        <tr>
+                            <td style="max-width:20%;width:15%;">
+                                @item_1.PatientName
+                            </td>
+                            <td style="max-width:20%;width:15%;">
+                                @item_1.PatientAddress
+                            </td>
+                            <td style="max-width:20%;width:15%;">
+                                @item_1.PatientClinic
+                            </td>
+                            <td style="max-width:180px;width:180px;">
+                                @item_1.Remarks
+                            </td>
+
+                            @if (item_1.SendleRefrence == null)
+                            {
+                                <td>
+                                    <span class="badge badge-primary" style="cursor:pointer" onclick="UpdateCustomer(@item_1.Id)">Pending</span>
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <span class="badge badge-success">
+                                        <a href="/TaskManager/DownloadPdfLandScape?SendleRefrence=@item_1.SendleRefrence" target="_blank" style="color:white">@item_1.SendleRefrence</a>
+                                    </span>
+                                </td>
+                            }
+
+                            @if (item_1.Status == true)
+                            {
+                                <td>
+                                    <a href="/TaskManager/IsStatusUpdate/@item_1.Id" class="btn btn-success" style=" height: auto; padding-left: 30px; padding-right: 30px; border-radius: 50px;">Done</a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <a onclick="UpdateTD(@item_1.Id)" @*href="/TaskManager/IsStatusUpdate/@item_1.Id" onclick="return confirm('Are you sure?')"*@ class="btn btn-info" style=" height: auto; padding-left: 30px; padding-right: 30px; border-radius: 50px;">Update</a>
+                                </td>
+                            }
+
+                            @if (item_1.Status == true)
+                            {
+                                <td>
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <a onclick="DeleteTaskDetail(@item_1.Id)" @*onclick="return confirm('Are you sure?')"*@ @*href="/TaskManager/DeleteTaskDetail/@item_1.Id"*@ class="btn btn-danger btn-sm" style="border-radius: 50px;">Delete</a>
+
+                                </td>
+                            }
+
+                        </tr>
+
+                    }
+                }
+
+            }
+        </tbody>
+    </table>
+
+</div>
+<div class="modal" tabindex="-1" role="dialog" id="TaskDetailModal">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Add Task Detail
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/TaskManager/AddTaskDetail" method="post">
+                <div class="modal-body">
+                    <div class="row">
+                        <input type="text" class="form-control" name="TaskMailId" id="ID" hidden value="">
+
+
+                        <div class="col-md-6 offset-md-3 form-group">
+                            <select id="searchDD" class="form-control" name="PatientClinic">
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#AddPracticeModal">add</button>
+                        </div>
+
+
+                        <div class="col-md-6 offset-md-3 form-group">
+                            <label for="PatientName">Patient Name</label>
+                            <input type="text" class="form-control" id="PatientName" name="PatientName" aria-describedby="emailHelp" value="" placeholder="PatientName">
+                        </div>
+                        <div class="col-md-6 offset-md-3 form-group">
+                            <label for="PatientAddress">Patient Address</label>
+                            <input type="text" class="form-control" name="PatientAddress" id="PatientAddress" placeholder="Enter PatientAddress">
+                        </div>
+                        <div class="col-md-6 offset-md-3 form-group">
+                            <label for="Remarks">Remarks</label>
+                            <textarea type="text" class="form-control" name="Remarks" id="Remarks" placeholder="Enter Remarks"></textarea>
+                        </div>
+                        <div class="col-md-6 offset-md-3 form-group">
+                            <input type="checkbox" id="Replacement" name="Replacement" value="true">
+                            <label for="Replacement">Replacement</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="AddPracticeModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/TaskManager/AddNewPractice" method="post">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Practice</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <label>Name</label>
+                    <br />
+                    <input name="Name" type="text" class="form-control" required />
+                    <br />
+                    <label>SVPracticeId</label>
+                    <br />
+                    <input name="SVPracticeId" type="text" class="form-control" />
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    TaskDetailModel = function (Id) {
+        $("#ID").val(Id);
+        getAllPractices();
+        $("#TaskDetailModal").modal("show");
+    }
+    UpdateTaskDetail = function (Id) {
+        $.ajax({
+            type: "Post",
+            url: "/TaskManager/UpdateTaskDetails/" + Id,
+            dataType: "json",
+            success: function (result) {
+                debugger
+                alert(result.PatientName)
+                $("#TaskDetailModal").modal("show");
+            },
+            error: function (result) {
+                alert('Please Try Again...');
+            }
+        })
+
+    }
+</script>
+
+<script>
+
+    function getAllPractices() {
+        $.ajax({
+            type: "GET",
+            url: "/DataMerging/NewPracticeDropdown",
+            dataType: "json",
+            success: function (result) {
+                $('#searchDD').html('');
+                var rows1 = "<option value='' selected disabled > --Select Practice--</option >";
+                $('#searchDD').append(rows1);
+
+                $.each(result, function (i, item) {
+                    var rows;
+                    rows = "<option value='" + item.Name + "'>" + item.Name + "</option>";
+                    $('#searchDD').append(rows);
+                });
+            }
+        })
+    };
+</script>
+<script>
+    UpdateCustomer = function (Id) {
+        $("#TaskDetailId").val(Id);
+        $("#UpdateSendelReference").modal("show");
+    }
+</script>
+
+<script>
+
+    $("#PendingTaskSearch").click(function () {
+
+        var data = $("#PendingTaskSearchForm").serialize();
+
+        $.ajax({
+        type: "POST",
+        url: '@Url.Action("FilterPendingTask", "TaskManager")',
+        data: data
+        })
+        .done(function (response) {
+            $("#PendingPartial").html(response);
+           getAllUniquePracticeId();
+
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        swal("Fail!");
+        });
+
+
+    });
+
+</script>
+
+
+
+
+
+<script>
+
+    function getAllUniquePracticeId() {
+        $.ajax({
+            type: "GET",
+            url: "/TaskManager/GetAllPractices",
+            dataType: "json",
+            success: function (result) {
+                $('#PatientClinic').html('');
+                var rows1 = "<option value='' selected disabled > --Select PracticeId--</option >";
+                $('#PatientClinic').append(rows1);
+
+                $.each(result, function (i, item) {
+                    var rows;
+                    rows = "<option value='" + item.Name + "'>" + item.Name + "</option>";
+                    $('#PatientClinic').append(rows);
+                });
+            }
+        })
+    };
+    getAllUniquePracticeId();
+</script>
+
+
+
+<script>
+        //Reset Button
+   $("#resetPendingTaskBtn").click(function () {
+
+
+        $.ajax({
+        url: '@Url.Action("Pending", "TaskManager")',
+        })
+        .done(function (response) {
+            $("#PendingPartial").html(response);
+        getAllUniquePracticeId();
+
+
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        swal("Fail");
+        });
+   });
+</script>
+<div class="modal fade" id="UpdateSendelReference">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/TaskManager/UpdateSendelReference" method="post">
+                <div class="modal-header">
+                    <h4 class="modal-title">Update Sendel Reference</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <input name="Id" id="TaskDetailId" hidden />
+
+                    <input name="SendleRefrence" type="text" class="form-control" required />
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

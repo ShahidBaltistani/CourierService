@@ -1,0 +1,110 @@
+﻿@model IEnumerable<CourierService.Controllers.DuplicateController.DuplicatePatientVM>
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <!-- Tab variant tab card start -->
+        <div class="card">
+            <div class="card-header">
+                <h5 style="font-size: 25px !important;">Duplicate Patients: @ViewBag.DuplicatePatientCount</h5>
+            </div>
+            <div class="card-block tab-icon">
+                <!-- Row start -->
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="table-responsive">
+                            <table class="table table-hover DuplicatePaginationTable" id="Duplicatetable" style="overflow-x: scroll;margin-top: 25px;">
+                                <thead style="background:#eaefef">
+                                    <tr>
+
+                                        <th scope="col">#</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Counter</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="DuplicatePaginationBody">
+                                    @foreach (var item in Model)
+                                    {
+
+                                        <tr class="InProcessedPaginationRow" onclick="DuplicateModel('@item.Name')">
+                                            <td></td>
+                                            <td>@item.Name</td>
+                                            <td>@item.Counter</td>
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- Row end -->
+            </div>
+        </div>
+        <!-- Tab variant tab card start -->
+    </div>
+</div>
+
+
+
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" id="DuplicateModel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Duplicate Detail
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Address</th>
+                            <th>DeliveredDate</th>
+                            <th>Return</th>
+                        </tr>
+                    </thead>
+                    <tbody id="duplicateDetailBody">
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    DuplicateModel = function (name) {
+        $.ajax({
+            type: "POST",
+            url: "/Duplicate/DuplicatePatientDetail?Name=" + name,
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                $('#duplicateDetailBody').html('');
+                $("#DuplicateModel").modal("show");
+                $.each(data, function (index, values) {
+                    debugger
+                    var tr = "<tr>" +
+                        "<td>" + values.Name + "</td>" +
+                        "<td>" + values.Address + "</td>" +
+                        "<td >" + values.DeliveredDate + "</td>" +
+                        "<td > " + values.Returned + "</td>" +
+                        "</tr>";
+                    $("#duplicateDetailBody").append(tr);
+                });
+            },
+            error: function (result) {
+                alert('Please Try Again...');
+            }
+        });
+    };
+</script>
+

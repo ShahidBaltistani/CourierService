@@ -1,0 +1,79 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourierService.Web", "CourierService\CourierService.Web.csproj", "{DD659537-70DC-49BE-ACC2-6892A5CF893D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourierService.Database", "CourierService.Database\CourierService.Database.csproj", "{D09E15D7-99E9-44B1-B452-73E3CD8725A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourierService.Entities", "CourierService.Entities\CourierService.Entities.csproj", "{D06FE246-52B9-40D9-85DA-72DBF7069556}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourierService.Repositories", "CourierService.Repositories\CourierService.Repositories.csproj", "{AA566D49-38C5-4558-9D13-CA817C123DA7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourierService.Services", "CourierService.Services\CourierService.Services.csproj", "{AC51C680-ABBA-4A0D-A600-C4006EAE75C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourierService.ViewModels", "CourierService.ViewModels\CourierService.ViewModels.csproj", "{0ABB06EA-83FE-4394-A991-9820E98484B4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DD659537-70DC-49BE-ACC2-6892A5CF893D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD659537-70DC-49BE-ACC2-6892A5CF893D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD659537-70DC-49BE-ACC2-6892A5CF893D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD659537-70DC-49BE-ACC2-6892A5CF893D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D09E15D7-99E9-44B1-B452-73E3CD8725A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D09E15D7-99E9-44B1-B452-73E3CD8725A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D09E15D7-99E9-44B1-B452-73E3CD8725A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D09E15D7-99E9-44B1-B452-73E3CD8725A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D06FE246-52B9-40D9-85DA-72DBF7069556}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D06FE246-52B9-40D9-85DA-72DBF7069556}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D06FE246-52B9-40D9-85DA-72DBF7069556}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D06FE246-52B9-40D9-85DA-72DBF7069556}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA566D49-38C5-4558-9D13-CA817C123DA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA566D49-38C5-4558-9D13-CA817C123DA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA566D49-38C5-4558-9D13-CA817C123DA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA566D49-38C5-4558-9D13-CA817C123DA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC51C680-ABBA-4A0D-A600-C4006EAE75C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC51C680-ABBA-4A0D-A600-C4006EAE75C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC51C680-ABBA-4A0D-A600-C4006EAE75C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC51C680-ABBA-4A0D-A600-C4006EAE75C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0ABB06EA-83FE-4394-A991-9820E98484B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0ABB06EA-83FE-4394-A991-9820E98484B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0ABB06EA-83FE-4394-A991-9820E98484B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0ABB06EA-83FE-4394-A991-9820E98484B4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {943A150E-EBD6-4754-A60B-031ACB5E46A4}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 7
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.vu360solutions.org/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = CourierService.Database\\CourierService.Database.csproj
+		SccProjectName1 = CourierService.Database
+		SccLocalPath1 = CourierService.Database
+		SccProjectUniqueName2 = CourierService.Entities\\CourierService.Entities.csproj
+		SccProjectName2 = CourierService.Entities
+		SccLocalPath2 = CourierService.Entities
+		SccProjectUniqueName3 = CourierService.Repositories\\CourierService.Repositories.csproj
+		SccProjectName3 = CourierService.Repositories
+		SccLocalPath3 = CourierService.Repositories
+		SccProjectUniqueName4 = CourierService.Services\\CourierService.Services.csproj
+		SccProjectName4 = CourierService.Services
+		SccLocalPath4 = CourierService.Services
+		SccProjectUniqueName5 = CourierService.ViewModels\\CourierService.ViewModels.csproj
+		SccProjectName5 = CourierService.ViewModels
+		SccLocalPath5 = CourierService.ViewModels
+		SccProjectUniqueName6 = CourierService\\CourierService.Web.csproj
+		SccProjectName6 = CourierService
+		SccLocalPath6 = CourierService
+	EndGlobalSection
+EndGlobal

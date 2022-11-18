@@ -1,0 +1,70 @@
+﻿@model CourierService.ViewModels.TaskManagements.TaskMailViewModel
+@{
+    ViewBag.Title = "AddMail";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <!-- Tab variant tab card start -->
+        <div class="card">
+            <div class="card-header">
+                <h5 style="font-size: 25px !important;">Add Mail</h5>
+
+            </div>
+            <div class="card-block tab-icon">
+                <!-- Row start -->
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <form action="/TaskManager/UpdateMail" method="post">
+                            <input type="text" hidden name="Id" value="@Model.Id">
+
+                            <div class="row">
+                                <div class="col-md-4  form-group">
+                                    <label for="From">From</label>
+                                    <input type="text" class="form-control" id="From" name="From" aria-describedby="emailHelp" value="@Model.From">
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <label for="Subject">Subject</label>
+                                    <input type="text" class="form-control" name="Subject" id="Subject" placeholder="Enter Subject" value="@Model.Subject" required>
+                                </div>
+                                <div class="col-md-4  form-group">
+                                    <label for="datepicker_6" class="col-form-label">Received Date:</label>
+                                    <input class="form-control datepickerpost" type="date" value="@Model.ReceivedDate" id="datepicker_6" name="ReceivedDate" />
+                                </div>
+                                <div class="col-md-4  form-group">
+                                    <label for="Description" class="col-form-label">Description:</label>
+                                    <textarea class="form-control" type="text" id="Description" name="Description">@Model.Description</textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 form-group">
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                </div>
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4"></div>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+                <!-- Row end -->
+            </div>
+        </div>
+        <!-- Tab variant tab card start -->
+    </div>
+
+</div>
+
+
+
+
+
+@{
+    ViewBag.Title = "UpdateMail";
+}
+
+<h2>UpdateMail</h2>
+

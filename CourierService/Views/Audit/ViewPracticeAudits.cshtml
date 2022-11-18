@@ -1,0 +1,365 @@
+﻿@{
+    ViewBag.Title = "ViewPracticeAudits";
+}
+
+<div class="container">
+    <h2>Practice Audits</h2>
+    <br />
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4 justify-content-center m-b-10">
+            <div class="btn-group dropdown-split-primary btnwidth">
+                <button type="button" class="btn btn-primary btnwidth1">Dr Nancy</button>
+                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split waves-effect waves-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">Toggle primary</span>
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item waves-effect waves-light" onclick="PracticeSummaryNancy()">Audit Summary</a>
+                    <a class="dropdown-item waves-effect waves-light" href="/Audit/GetDataByPracticeId?PracticeId=Dr_Nancy_Clinic">Audit Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4 mb-2">
+            <div class="btn-group dropdown-split-primary btnwidth">
+                <button type="button" class="btn btn-primary btnwidth1">Dr Crystopher Mendollo</button>
+                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split waves-effect waves-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">Toggle primary</span>
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item waves-effect waves-light" href="#" onclick="PracticeSummaryMendello()">Audit Summary</a>
+                    <a class="dropdown-item waves-effect waves-light" href="/Audit/GetDataByPracticeId?PracticeId=Dr_Christopher_Mendello">Audit Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-4 mb-2">
+            <div class="btn-group dropdown-split-primary btnwidth">
+                <button type="button" class="btn btn-primary btnwidth1">Dr Country Meadows</button>
+                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split waves-effect waves-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">Toggle primary</span>
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item waves-effect waves-light" href="#" onclick="PracticeSummaryCountry()">Audit Summary</a>
+                    <a class="dropdown-item waves-effect waves-light" href="/Audit/GetDataByPracticeId?PracticeId=Dr_Country_Meadows">Audit Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-4 mb-2">
+            <div class="btn-group dropdown-split-primary btnwidth">
+                <button type="button" class="btn btn-primary btnwidth1">Dr Patel</button>
+                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split waves-effect waves-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">Toggle primary</span>
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item waves-effect waves-light" onclick="PracticeSummaryPatel()">Audit Summary</a>
+                    <a class="dropdown-item waves-effect waves-light" href="/Audit/GetDataByPracticeId?PracticeId=Dr_Patel">Audit Details</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-sm-4 mb-2">
+            <div class="btn-group dropdown-split-primary btnwidth">
+                <button type="button" class="btn btn-primary btnwidth1">Dr Hirjee</button>
+                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split waves-effect waves-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">Toggle primary</span>
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item waves-effect waves-light" onclick="PracticeSummaryHirjee()">Audit Summary</a>
+                    <a class="dropdown-item waves-effect waves-light" href="/Audit/GetDataByPracticeId?PracticeId=Dr_Hirjee">Audit Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4 mb-2">
+            <div class="btn-group dropdown-split-primary btnwidth">
+                <button type="button" class="btn btn-primary btnwidth1">Dr Ackerman</button>
+                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split waves-effect waves-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">Toggle primary</span>
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item waves-effect waves-light" onclick="PracticeSummaryAckerman()">Audit Summary</a>
+                    <a class="dropdown-item waves-effect waves-light" href="/Audit/GetDataByPracticeId?PracticeId=Dr_Ackerman">Audit Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" id="AuditSummaryModal">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Audit Summary
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formnote">-->
+@*<input name="ReferenceId" id="ReferenceId" value="" hidden />*@
+<!--<div class="row">
+                        <div class="col-3 form-group">
+                            <label style="color:#2f6295 !important">Booking:</label>
+                        </div>
+                        <div class="col-3 form-group">
+                            <label id="Booking"></label>
+                        </div>
+                        <div class="col-3 form-group">
+                            <label style="color:#2f6295 !important">Pickup:</label>
+                        </div>
+                        <div class="col-3 form-group">
+                            <label id="Pickup"></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3 form-group">
+                            <label style="color:#2f6295 !important">Pickup Attempted:</label>
+                        </div>
+                        <div class="col-3 form-group">
+                            <label id="PickupAttempted"></label>
+                        </div>
+                        <div class="col-3 form-group">
+                            <label style="color:#2f6295 !important">Transit:</label>
+                        </div>
+                        <div class="col-3 form-group">
+                            <label id="Transit"></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3 form-group">
+                            <label style="color:#2f6295 !important">Cancelled:</label>
+                        </div>
+                        <div class="col-3 form-group">
+                            <label id="Cancelled"></label>
+                        </div>
+                        <div class="col-3 form-group">
+                            <label style="color:#2f6295 !important">Unable to Book:</label>
+                        </div>
+                        <div class="col-3 form-group">
+                            <label id="UnabletoBook"></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3 form-group">
+                            <label style="color:#2f6295 !important">Lost:</label>
+                        </div>
+                        <div class="col-3 form-group">
+                            <label id="Lost"></label>
+                        </div>
+                        <div class="col-3 form-group">
+                            <label style="color:#2f6295 !important">Return to Sender:</label>
+                        </div>
+                        <div class="col-3 form-group">
+                            <label id="ReturntoSender"></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3 form-group">
+                            <label style="color:#2f6295 !important">Delivered:</label>
+                        </div>
+                        <div class="col-3 form-group">
+                            <label id="Delivered"></label>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+
+    PracticeSummaryMendello = function () {
+        $.ajax({
+            type: "GET",
+            url: "/Audit/PracticeSummary/",
+            data: {
+                "PracticeId": "Dr_Christopher_Mendello",
+            },
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                debugger
+                $("#AuditSummaryModal").modal('show');
+                $("#Booking").text(data.Booking);
+                $("#Pickup").text(data.Pickup);
+                $("#PickupAttempted").text(data.Pickup_Attempted);
+                $("#Transit").text(data.Transit);
+                $("#Cancelled").text(data.Cancelled);
+                $("#UnabletoBook").text(data.Unable_to_Book);
+                $("#Lost").text(data.Lost);
+                $("#ReturntoSender").text(data.Return_to_Sender);
+                $("#Delivered").text(data.Delivered);
+            },
+            error: function (result) {
+                alert('Please Try Again...');
+            }
+        });
+    };
+
+    PracticeSummaryNancy = function () {
+        $.ajax({
+            type: "GET",
+            url: "/Audit/PracticeSummary/",
+            data: {
+                "PracticeId": "Dr_Nancy_Clinic",
+            },
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                debugger
+                $("#AuditSummaryModal").modal('show');
+
+                $("#Booking").text(data.Booking);
+                $("#Pickup").text(data.Pickup);
+                $("#PickupAttempted").text(data.Pickup_Attempted);
+                $("#Transit").text(data.Transit);
+                $("#Cancelled").text(data.Cancelled);
+                $("#UnabletoBook").text(data.Unable_to_Book);
+                $("#Lost").text(data.Lost);
+                $("#ReturntoSender").text(data.Return_to_Sender);
+                $("#Delivered").text(data.Delivered);
+            },
+            error: function (result) {
+                alert('Please Try Again...');
+            }
+        });
+    };
+
+    PracticeSummaryCountry = function () {
+        $.ajax({
+            type: "GET",
+            url: "/Audit/PracticeSummary/",
+            data: {
+                "PracticeId": "Dr_Country_Meadows",
+            },
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                debugger
+                $("#AuditSummaryModal").modal('show');
+
+                $("#Booking").text(data.Booking);
+                $("#Pickup").text(data.Pickup);
+                $("#PickupAttempted").text(data.Pickup_Attempted);
+                $("#Transit").text(data.Transit);
+                $("#Cancelled").text(data.Cancelled);
+                $("#UnabletoBook").text(data.Unable_to_Book);
+                $("#Lost").text(data.Lost);
+                $("#ReturntoSender").text(data.Return_to_Sender);
+                $("#Delivered").text(data.Delivered);
+            },
+            error: function (result) {
+                alert('Please Try Again...');
+            }
+        });
+    };
+
+    PracticeSummaryPatel = function () {
+        $.ajax({
+            type: "GET",
+            url: "/Audit/PracticeSummary/",
+            data: {
+                "PracticeId": "Dr_Patel",
+            },
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                debugger
+                $("#AuditSummaryModal").modal('show');
+
+                $("#Booking").text(data.Booking);
+                $("#Pickup").text(data.Pickup);
+                $("#PickupAttempted").text(data.Pickup_Attempted);
+                $("#Transit").text(data.Transit);
+                $("#Cancelled").text(data.Cancelled);
+                $("#UnabletoBook").text(data.Unable_to_Book);
+                $("#Lost").text(data.Lost);
+                $("#ReturntoSender").text(data.Return_to_Sender);
+                $("#Delivered").text(data.Delivered);
+            },
+            error: function (result) {
+                alert('Please Try Again...');
+            }
+        });
+    };
+    PracticeSummaryHirjee = function () {
+        $.ajax({
+            type: "GET",
+            url: "/Audit/PracticeSummary/",
+            data: {
+                "PracticeId": "Dr_Hirjee",
+            },
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                debugger
+                $("#AuditSummaryModal").modal('show');
+
+                $("#Booking").text(data.Booking);
+                $("#Pickup").text(data.Pickup);
+                $("#PickupAttempted").text(data.Pickup_Attempted);
+                $("#Transit").text(data.Transit);
+                $("#Cancelled").text(data.Cancelled);
+                $("#UnabletoBook").text(data.Unable_to_Book);
+                $("#Lost").text(data.Lost);
+                $("#ReturntoSender").text(data.Return_to_Sender);
+                $("#Delivered").text(data.Delivered);
+            },
+            error: function (result) {
+                alert('Please Try Again...');
+            }
+        });
+    };
+    PracticeSummaryAckerman = function () {
+        $.ajax({
+            type: "GET",
+            url: "/Audit/PracticeSummary/",
+            data: {
+                "PracticeId": "Dr_Ackerman",
+            },
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                debugger
+                $("#AuditSummaryModal").modal('show');
+
+                $("#Booking").text(data.Booking);
+                $("#Pickup").text(data.Pickup);
+                $("#PickupAttempted").text(data.Pickup_Attempted);
+                $("#Transit").text(data.Transit);
+                $("#Cancelled").text(data.Cancelled);
+                $("#UnabletoBook").text(data.Unable_to_Book);
+                $("#Lost").text(data.Lost);
+                $("#ReturntoSender").text(data.Return_to_Sender);
+                $("#Delivered").text(data.Delivered);
+            },
+            error: function (result) {
+                alert('Please Try Again...');
+            }
+        });
+    };
+
+
+
+</script>
+
+
+

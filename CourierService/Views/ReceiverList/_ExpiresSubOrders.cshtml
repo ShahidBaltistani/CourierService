@@ -1,0 +1,196 @@
+﻿<script src="~/Content/DataTables (1)/datatables.min.js"></script>
+<link href="~/Content/DataTables (1)/datatables.min.css" rel="stylesheet" />
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.print.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/dataTables.buttons.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.semanticui.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.jqueryui.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.html5.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.foundation.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.flash.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.colVis.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.bootstrap4.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.bootstrap.min.js"></script>
+
+<link href="~/Content/DataTables (1)/Buttons-1.6.5/css/buttons.bootstrap.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/Buttons-1.6.5/css/buttons.bootstrap4.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/Buttons-1.6.5/css/buttons.dataTables.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/Buttons-1.6.5/css/buttons.foundation.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/Buttons-1.6.5/css/buttons.jqueryui.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/Buttons-1.6.5/css/buttons.semanticui.min.css" rel="stylesheet" />
+
+
+<link href="~/Content/DataTables (1)/SearchPanes-1.2.2/css/searchPanes.bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/SearchPanes-1.2.2/css/searchPanes.bootstrap4.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/SearchPanes-1.2.2/css/searchPanes.dataTables.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/SearchPanes-1.2.2/css/searchPanes.foundation.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/SearchPanes-1.2.2/css/searchPanes.jqueryui.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/SearchPanes-1.2.2/css/searchPanes.semanticui.min.css" rel="stylesheet" />
+
+<script src="~/Content/DataTables (1)/SearchPanes-1.2.2/js/dataTables.searchPanes.min.js"></script>
+<script src="~/Content/DataTables (1)/SearchPanes-1.2.2/js/searchPanes.bootstrap.min.js"></script>
+<script src="~/Content/DataTables (1)/SearchPanes-1.2.2/js/searchPanes.bootstrap4.min.js"></script>
+<script src="~/Content/DataTables (1)/SearchPanes-1.2.2/js/searchPanes.dataTables.min.js"></script>
+<script src="~/Content/DataTables (1)/SearchPanes-1.2.2/js/searchPanes.foundation.min.js"></script>
+<script src="~/Content/DataTables (1)/SearchPanes-1.2.2/js/searchPanes.jqueryui.min.js"></script>
+<script src="~/Content/DataTables (1)/SearchPanes-1.2.2/js/searchPanes.semanticui.min.js"></script>
+
+@model IEnumerable<CourierService.ViewModels.Orders.OrderViewModel>
+<div class="">
+    <table class="table table-hover" id="SubExpiretable">
+        <thead style="background:#eaefef;">
+            <tr>
+                <th scope="col" style="width:100px !important;">Name</th>
+                <th scope="col" style="width:150px !important;">Address</th>
+                <th scope="col" style="width:100px !important;">Customer_Reference</th>
+                <th scope="col" style="width:100px !important;">Current_Status</th>
+                <th scope="col" style="width:100px !important;">Order_Status</th>
+                <th scope="col" style="width:100px !important;">Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td style="width:100px !important;">@item.Receiver.Name</td>
+                    <td style="width:150px !important;">@(item.Receiver.Address_Line2==null ? item.Receiver.Address_Line1 + item.Receiver.Suburb+ "," + item.Receiver.State_Name + " " + item.Receiver.Postcode: item.Receiver.Address_Line2)</td>
+
+
+                    <td style="width: 100px !important;">
+                        @item.Customer_Reference
+                    </td>
+
+                    <td style="width: 100px !important;">
+                        <span>@Html.Raw(item.CurrentStatus)</span>
+                    </td>
+
+                    @if (item.DeliveredDate.ToShortDateString().Contains("0001"))
+                    {
+                        <td style="width:100px !important;">
+                            <h4>
+                                <span class="badge badge-info x3">@item.OrderStatus.Name</span>
+                                <br />
+                                <span class="badge badge-info x3">@item.CreatedOn.Value.ToShortDateString()</span>
+                            </h4>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <span class="badge" style="background-color:green;color:white">@item.OrderStatus.Name</span>
+                            <br />
+                            <h3>
+                                <span class="badge" style="background-color:green;color:white">
+                                    @item.DeliveredDate.ToShortDateString()
+                                </span>
+                            </h3>
+                        </td>
+                    }
+                    <td style="width: 100px !important;">
+                        <div class="btn-group dropdown-split-info">
+                            <button type="button" class="btn btn-info" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="feather icon-menu" style="margin:0px !important;padding:0px !important"></i></button>
+                            <div class="dropdown-menu">
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item waves-effect waves-light" href="/CreatingOrders/CreateSingleOrder/@item.Id" target="_blank">Regenerate</a>
+
+                                <div class="dropdown-divider"></div>
+                                <button class="dropdown-item waves-effect waves-light" onclick="ShowCancelModal(@item.Id)">Cancel</button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" id="ExpireCancelOrderModal">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        Cancel Order
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formnote">
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <label for="Remarks">Remarks</label>
+                                <textarea type="text" class="form-control" name="CancelRemarks" id="ExpireOrderCancelRemarks" placeholder="Enter Cancel Remarks"></textarea>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+
+                    <button type="submit" class="btn btn-primary" onclick="CancelOrder()">Cancel Order</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var ID = 0;
+    ShowCancelModal = function (Id) {
+        ID = Id;
+        $("#ExpireCancelOrderModal").modal("show");
+    }
+    CancelOrder = function () {
+        var remarks = $("#ExpireOrderCancelRemarks").val();
+        if (remarks == null || remarks == "") {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Please select the required Field!',
+            });
+            return;
+        }
+        $.ajax({
+            type: "GET",
+            url: "/ReceiverList/CancelOrder?Id=" + ID + "&CancelRemarks=" + remarks,
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Succeeed...',
+                    text: 'Canceled Sucessfully',
+                });
+                $("#ExpireCancelOrderModal").modal("hide");
+            },
+            error: function (result) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong please try again!',
+                })
+            }
+        });
+    };
+
+    $(function () {
+
+        var t = $('#SubExpiretable').DataTable({
+            searching: true,
+            paging: true,
+            pageLength: 5,
+            info: true,
+            "columnDefs": [{
+                "searchable": false,
+                "orderable": false,
+                "targets": 0,
+            }],
+            "order": [[1, 'asc']],
+            dom: 'Bfrtip',
+            buttons: [
+                { extend: 'excel', className: 'btn btn-primary' }
+            ],
+        });
+    })
+</script>

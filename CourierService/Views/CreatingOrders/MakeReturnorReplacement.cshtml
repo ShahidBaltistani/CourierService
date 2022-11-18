@@ -1,0 +1,35 @@
+﻿@model CourierService.ViewModels.ReturnORReplacament.ReturnReplacementViewModel
+@{
+    ViewBag.Title = "MakeReturnorReplacement";
+}
+<form action="/CreatingOrders/MakeReturnorReplacementOrders" method="post">
+
+    <input name="SourceId" value="@Model.SourceId" hidden />
+    <input name="DeviceTypeId" value="@Model.DeviceTypeId" hidden />
+    <input name="NewPracticeId" value="@Model.NewPracticeId" hidden />
+    <input name="Instructions" value="@Model.Instructions" hidden />
+    <input name="Name" value="@Model.Name" hidden  />
+    <input name="Email" value="@Model.Email" hidden />
+    <input name="Phone" value="@Model.Phone" hidden />
+    <input name="Address_Line1" value="@Model.Address_Line1" hidden />
+    <input name="Address_Line2" value="@Model.Address_Line2" hidden />
+    <input name="Suburb" value="@Model.Suburb" hidden />
+    <input name="Postcode" value="@Model.Postcode" hidden />
+    <input name="State_Name" value="@Model.State_Name" hidden />
+    <input name="Country" value="@Model.Country" hidden />
+
+
+    <div class="row">
+        <div class="col-md-4 offset-md-2 form-group">
+            <label for="datepicker-5" class="col-form-label">Pick Date:</label>
+            <input class="form-control datepickerpost" required name="Pickup_Date" type="date" id="datepicker" style="width: 185px;height: 48px;" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 offset-md-2 form-group">
+            <button type="submit" class="btn btn-primary" name="Return">Return</button>
+            <button type="submit" class="btn btn-primary" name="Replacement">Replacement</button>
+        </div>
+    </div>
+</form>
+

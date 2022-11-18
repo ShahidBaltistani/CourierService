@@ -1,0 +1,33 @@
+﻿@model IEnumerable<CourierService.ViewModels.Orders.OrderLabelViewModel>
+@{
+    ViewBag.Title = "LabelPrinting";
+}
+<div class="container" style="margin-top:20px;">
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-bordered" id="table-information">
+                <thead>
+                    <tr>
+                        <th scope="col">Formate</th>
+                        <th scope="col">Size</th>
+                        <th scope="col">Download</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr id="">
+                            <td>@item.Formate</td>
+                            <td>@item.Size</td>
+                            <td>
+                                <a href="/ReceiverList/DownloadPdf/?Url=@item.Url" target="_blank">
+                                    Preview
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

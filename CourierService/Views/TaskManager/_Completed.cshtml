@@ -1,0 +1,251 @@
+﻿@model IEnumerable<CourierService.ViewModels.DTOForTaskManagements.TaskMailDTOViewModel>
+<div class="">
+    <form id="CompletedTaskSearchForm">
+        <div class="row">
+            <div class="col-sm-2">
+                <input class="form-control" value="" id="" name="PatientName" placeholder="Patient Name" style="margin-top: 30px;height: 45px;" />
+            </div>
+            <div class="col-sm-2" style="margin-top: 30px;">
+                <select id="PatientClinic1" class=" js-example-basic-single" name="PatientClinic" style="height: 45px; width: 178px;">
+                </select>
+
+            </div>
+            <div class="col-sm-2">
+                <input class="form-control" id="" name="PatientAddress" placeholder="Patient Address" style="margin-top: 30px;height: 45px;" />
+            </div>
+            <div class="col-sm-2">
+                <input class="form-control" id="" name="SendleRefrence" placeholder="Sendle Refrence" style="margin-top: 30px;height: 45px;" />
+            </div>
+
+            <div class="col-sm-2">
+                <input class="form-control" id="" name="TaskMail.From" placeholder="Email From" style="margin-top: 30px;height: 45px;" />
+            </div>
+            <div class="col-sm-2">
+                <input class="form-control datepickerpost" name="TaskMail.ReceivedDate" type="date" id="datepicker-5" style="margin-top: 30px; height: 45px;" />
+            </div>
+        </div>
+
+    </form>
+    <div class="row mb-2">
+        <div class="col-lg-3">
+            <div class="btn-group " role="group" data-toggle="tooltip" data-placement="top" title="" data-original-title=".btn-xlg" style="margin-top:30px;width: 100%;display: flex !important;">
+                <button type="button" class="btn btn-primary btn-md waves-effect waves-light " id="CompletedTaskSearch" style=" border-radius: 50px 0px 0px 50px;">Search</button>
+                <button type="button" class="btn btn-danger btn-md waves-effect waves-light resetBtn" id="CompletedresetBtn" style="border-radius: 0px 50px 50px 0px; margin-left: 2px;">Reset</button>
+            </div>
+
+        </div>
+        <div class="col-lg-3"></div>
+        <div class="col-lg-3"></div>
+        <div class="col-lg-3"></div>
+
+    </div>
+    <table class="table table-hover">
+        <tbody>
+            @if (Model.Count() == 0)
+            {
+                <tr>
+                    <td colspan="6" style="text-align:center;font-size:20px;font-weight:bold;">
+                        No Tasks...
+                    </td>
+                </tr>
+            }
+            else
+            {
+
+                foreach (var item in Model)
+                {
+                    if (item.TaskDetails.Count() > 0)
+                    {
+                        var x = 0;
+                        if (x != item.Id)
+                        {
+                            <tr style="background-color:#e9e7e7">
+                                <td style="font-size:20px;font-weight:600">
+                                    @item.From
+                                </td>
+                                <td style="font-size:20px;font-weight:600">
+                                    @item.Subject
+                                </td>
+                                <td style="font-size:20px;font-weight:600" colspan="4">
+                                    @item.Date
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="12" style="border:1px solid lightgray;height:5px">
+                                    @item.Description
+                                </td>
+                            </tr>
+
+
+                            x = item.Id;
+                        }
+                        <tr>
+                            <th>Patient_Name</th>
+                            <th>Patient_Address</th>
+                            <th>Patient_Clinic</th>
+                            <th>Remarks</th>
+                            <th>Update Sendle Reference</th>
+                            <th>Status</th>
+                        </tr>
+                    }
+
+                    foreach (var item_1 in item.TaskDetails)
+                    {
+                        <tr>
+                            <td style="max-width:20%;width:15%;">
+                                @item_1.PatientName
+                            </td>
+                            <td style="max-width:20%;width:15%;">
+                                @item_1.PatientAddress
+                            </td>
+                            <td style="max-width:20%;width:15%;">
+                                @item_1.PatientClinic
+                            </td>
+                            <td style="max-width:180px;width:180px;">
+                                @item_1.Remarks
+                            </td>
+
+                            @if (item_1.SendleRefrence == null)
+                            {
+                                <td>
+                                    <span class="badge badge-primary" style="cursor:pointer" onclick="UpdateCustomer(@item_1.Id)">Pending</span>
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <span class="badge badge-success">
+                                        <a href="/TaskManager/DownloadPdfLandScape?SendleRefrence=@item_1.SendleRefrence" target="_blank" style="color:white">@item_1.SendleRefrence</a>
+                                    </span>
+                                </td>
+                            }
+
+                            @if (item_1.Status == true)
+                            {
+                                <td>
+                                    <a onclick="UpdateCompletedTD(@item_1.Id)" @*href="/TaskManager/IsStatusUpdate/@item_1.Id"*@ class="btn btn-success" style=" height: auto; padding-left: 30px; padding-right: 30px; border-radius: 50px;">Add to Pending</a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <a href="/TaskManager/IsStatusUpdate/@item_1.Id" class="btn btn-info" style=" height: auto; padding-left: 30px; padding-right: 30px; border-radius: 50px;">Update</a>
+                                </td>
+                            }
+                        </tr>
+
+                    }
+                }
+
+            }
+        </tbody>
+    </table>
+
+</div>
+
+<script>
+    UpdateCustomer = function (Id) {
+        $("#TaskDetailId_C").val(Id);
+        $("#UpdateSendelReference_C").modal("show");
+    }
+</script>
+
+<script>
+
+    $("#CompletedTaskSearch").click(function () {
+
+        var data = $("#CompletedTaskSearchForm").serialize();
+
+        $.ajax({
+        type: "POST",
+        url: '@Url.Action("FilterCompletedTask", "TaskManager")',
+        data: data
+        })
+        .done(function (response) {
+        //debugger;
+            $("#CompletedPartial").html(response);
+           getAllUniquePracticeId();
+
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        swal("Fail!");
+        });
+
+        });
+
+</script>
+
+
+
+
+
+<script>
+
+    function getAllUniquePracticeId() {
+        $.ajax({
+            type: "GET",
+            url: "/TaskManager/GetAllPractices",
+            dataType: "json",
+            success: function (result) {
+                $('#PatientClinic1').html('');
+                var rows1 = "<option value='' selected disabled > --Select PracticeId--</option >";
+                $('#PatientClinic1').append(rows1);
+
+                $.each(result, function (i, item) {
+                    var rows;
+                    rows = "<option value='" + item.Name + "'>" + item.Name + "</option>";
+                    $('#PatientClinic1').append(rows);
+
+                });
+            }
+        })
+    };
+    getAllUniquePracticeId();
+</script>
+
+
+
+<script>
+        //Reset Button
+    $("#CompletedresetBtn").click(function () {
+
+
+        $.ajax({
+        url: '@Url.Action("Completed", "TaskManager")',
+        beforeSend: function () {
+
+        },
+        })
+        .done(function (response) {
+        debugger;
+            $("#CompletedPartial").html(response);
+        getAllUniquePracticeId();
+
+
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        swal("Fail");
+        });
+     });
+</script>
+<div class="modal fade" id="UpdateSendelReference_C">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/TaskManager/UpdateSendelReference" method="post">
+                <div class="modal-header">
+                    <h4 class="modal-title">Update Sendel Reference</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <input name="Id" id="TaskDetailId_C" hidden />
+
+                    <input name="SendleRefrence" type="text" class="form-control" required />
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

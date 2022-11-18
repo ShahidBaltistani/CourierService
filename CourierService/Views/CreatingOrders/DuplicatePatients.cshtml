@@ -1,0 +1,17 @@
+﻿@model IEnumerable<CourierService.Controllers.CreatingOrdersController.Duplicate>
+@{
+    ViewBag.Title = "DuplicatePatients";
+}
+
+<h2>DuplicatePatients</h2>
+
+
+@foreach (var item in Model)
+{
+<div class="row">
+    <strong>@item.Name</strong>
+    <strong>@item.Counter</strong>
+</div>
+    <br />
+}
+

@@ -1,0 +1,443 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Sendle Courier</title>
+
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="Admindek Bootstrap admin template made using Bootstrap 4 and it has huge amount of ready made feature, UI components, pages which completely fulfills any dashboard needs." />
+    <meta name="keywords" content="flat ui, admin Admin , Responsive, Landing, Bootstrap, App, Template, Mobile, iOS, Android, apple, creative app">
+    <meta name="author" content="colorlib" />
+    <!-- Favicon icon -->
+    <link rel="icon" href="~/Content/files/assets/images/favicon.ico" type="image/x-icon">
+    <!-- Google font-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:500,700" rel="stylesheet">
+    <!-- Required Fremwork -->
+    <link href="~/Content/files/bower_components/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+
+
+
+    <!-- waves.css -->
+    <link rel="stylesheet" href="~/Content/files/assets/pages/waves/css/waves.min.css" type="text/css" media="all">
+    <!-- feather icon -->
+    <link rel="stylesheet" type="text/css" href="~/Content/files/assets/icon/feather/css/feather.css">
+    <!-- font-awesome-n -->
+    <link rel="stylesheet" type="text/css" href="~/Content/files/assets/css/font-awesome-n.min.css">
+
+    <!-- Date-time picker css -->
+    <link rel="stylesheet" type="text/css" href="~/Content/files/assets/pages/advance-elements/css/bootstrap-datetimepicker.css">
+
+    <link href="~/Content/files/bower_components/bootstrap-daterangepicker/css/daterangepicker.css" rel="stylesheet" />
+
+    <!-- Date-Dropper css -->
+    <link rel="stylesheet" type="text/css" href="~/Content/files/bower_components/datedropper/css/datedropper.min.css" />
+
+    <!-- themify-icons line icon -->
+    <link rel="stylesheet" type="text/css" href="~/Content/files/assets/icon/themify-icons/themify-icons.css">
+    <!-- ico font -->
+    <link rel="stylesheet" type="text/css" href="~/Content/files/assets/icon/icofont/css/icofont.css">
+    <!-- Chartlist chart css -->
+    <link rel="stylesheet" href="~/Content/files/bower_components/chartist/css/chartist.css" type="text/css" media="all">
+    <!-- Switch component css -->
+    <link rel="stylesheet" type="text/css" href="~/Content/files/bower_components/switchery/css/switchery.min.css">
+    <!-- Tags css -->
+    <link rel="stylesheet" type="text/css" href="~/Content/files/bower_components/bootstrap-tagsinput/css/bootstrap-tagsinput.css" />
+
+
+
+    <!-- Color Picker css -->
+    <link rel="stylesheet" type="text/css" href="~/Content/files/bower_components/spectrum/css/spectrum.css" />
+    <link rel="stylesheet" href="~/Content/files/bower_components/select2/css/select2.min.css" />
+    <!-- Multi Select css -->
+    <link rel="stylesheet" type="text/css" href="~/Content/files/bower_components/bootstrap-multiselect/css/bootstrap-multiselect.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/files/bower_components/multiselect/css/multi-select.css" />
+    <!-- Style.css -->
+    <link rel="stylesheet" type="text/css" href="~/Content/files/assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/files/assets/css/widget.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/files/assets/css/pages.css">
+
+
+</head>
+
+<body>
+    <div class="loader-bg">
+        <div class="loader-bar"></div>
+    </div>
+    <div id="pcoded" class="pcoded">
+        <div class="pcoded-overlay-box"></div>
+        <div class="pcoded-container navbar-wrapper">
+            <nav class="navbar header-navbar pcoded-header">
+                <div class="navbar-wrapper">
+                    <div class="navbar-logo">
+                        <a href="#">
+                            <h2 style="font-size: 23px;">Sendle Courier</h2>
+                        </a>
+                        <a class="mobile-menu" id="mobile-collapse" href="#!">
+                            <i class="feather icon-menu icon-toggle-right"></i>
+                        </a>
+                        <a class="mobile-options waves-effect waves-light">
+                            <i class="feather icon-more-horizontal"></i>
+                        </a>
+                    </div>
+                    <div class="navbar-container container-fluid">
+                        <ul class="nav-right">
+
+                            <li class="user-profile header-notification">
+
+                                <div class="dropdown-primary dropdown">
+                                    <div class="dropdown-toggle" data-toggle="dropdown">
+                                        @if (User.Identity.IsAuthenticated && Session["UserId"] != null)
+                                        {
+                                            <img src="~/Content/Images/avatar.png" width="50" height="40" />
+                                        }
+                                        <i class="feather icon-chevron-down" style="color:white;"></i>
+                                    </div>
+                                    <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                                        <li>
+                                            <a href="/Account/Logout">
+                                                <i class="feather icon-log-out"></i> Logout
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </nav>
+            <div class="pcoded-main-container">
+                <div class="pcoded-wrapper">
+                    <nav class="pcoded-navbar">
+                        <div class="nav-list">
+                            <div class="pcoded-inner-navbar main-menu">
+                                <ul class="pcoded-item pcoded-left-item">
+
+                                    <li class="">
+                                        <a href="/Home/Dashboard" class="waves-effect waves-dark">
+                                            <span class="pcoded-micon">
+                                                <i class="feather icon-activity"></i>
+                                            </span>
+                                            <span class="pcoded-mtext">Dashboard </span>
+                                        </a>
+                                    </li>
+                                    <li class="">
+                                        <a href="/ExcelClosedXML/UploadExcel" class="waves-effect waves-dark">
+                                            <span class="pcoded-micon">
+                                                <i class="feather icon-file"></i>
+                                            </span>
+                                            <span class="pcoded-mtext">Import / Export File </span>
+                                        </a>
+                                    </li>
+                                    <li class="">
+                                        <a href="/InProcess/InProcessOrders" class="waves-effect waves-dark">
+                                            <span class="pcoded-micon">
+                                                <i class="feather icon-settings"></i>
+                                            </span>
+                                            <span class="pcoded-mtext">InProcess </span>
+                                        </a>
+                                    </li>
+
+                                    <li class="">
+                                        <a href="/ReceiverList/ReceiverList" class="waves-effect waves-dark">
+                                            <span class="pcoded-micon">
+                                                <i class="feather icon-shopping-cart"></i>
+                                            </span>
+                                            <span class="pcoded-mtext">Orders</span>
+                                        </a>
+                                    </li>
+
+
+
+                                    <li class="">
+                                        <a href="/Audit/ViewSummary" class="waves-effect waves-dark">
+                                            <span class="pcoded-micon">
+                                                <i class="feather icon-activity"></i>
+                                            </span>
+                                            <span class="pcoded-mtext">Audit Practice</span>
+                                        </a>
+                                    </li>
+                                    <li class="">
+                                        <a href="/hangfire/" class="waves-effect waves-dark">
+                                            <span class="pcoded-micon">
+                                                <i class="feather icon-user"></i>
+                                            </span>
+                                            <span class="pcoded-mtext">HangFire Dashboard </span>
+                                        </a>
+                                    </li>
+
+                                    <li class="">
+                                        <a href="/TaskManager/Index" class="waves-effect waves-dark">
+                                            <span class="pcoded-micon">
+                                                <i class="feather icon-tag"></i>
+                                            </span>
+                                            <span class="pcoded-mtext">Task Management</span>
+                                        </a>
+                                    </li>
+                                    <li class="">
+                                        <a href="/DataMerging/DistinctConsentedPatients" class="waves-effect waves-dark">
+                                            <span class="pcoded-micon">
+                                                <i class="feather icon-users"></i>
+                                            </span>
+                                            <span class="pcoded-mtext">Consented_Patients</span>
+                                        </a>
+                                    </li>
+
+                                    @if (User.Identity.IsAuthenticated && Session["UserId"] != null)
+                                    {
+                                        if (Session["Role"] != null && Session["Role"].ToString() == "2")
+                                        {
+                                            <li class="pcoded-hasmenu">
+                                                <a href="#" class="waves-effect waves-dark">
+                                                    <span class="pcoded-micon">
+                                                        <i class="feather icon-move"></i>
+                                                    </span>
+                                                    <span class="pcoded-mtext">External..</span>
+                                                </a>
+                                                <ul class="pcoded-submenu">
+
+                                                    <li class="">
+                                                        <a href="/DataMerging/ConnectionClass" class="waves-effect waves-dark">
+                                                            <span class="pcoded-mtext">Data Transfer</span>
+                                                        </a>
+                                                    </li>
+
+                                                </ul>
+                                            </li>
+                                        }
+
+                                    }
+
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                    <div class="pcoded-content">
+                        <div class="page-header card">
+                            <div class="row align-items-end">
+                                <div class="col-lg-8">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pcoded-inner-content">
+                            <div class="main-body">
+                                <!--
+                                For Searching :by Kashif
+                                -->
+                                <div class="container search-table">
+                                    <div class="col-md-5 offset-3">
+                                        <div class="search-box">
+                                            <input type="text" id="CustomSearch" class="form-control" placeholder="Search all...">
+                                        </div>
+                                        <div id="searchpartial">
+                                        </div>
+                                    </div>
+                                </div>
+                                <img src="~/Content/Images/PdfMergingLoader.gif" style="display:none" id="CustomSearchLoader" />
+                                <div class="page-wrapper">
+                                    <div class="page-body">
+                                        @RenderBody()
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="styleSelector">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        .search-table {
+            padding: 1%;
+        }
+
+        .search-box {
+            background: #c1c1c1;
+            border: 1px solid #ababab;
+        }
+
+            .search-box input:focus {
+                box-shadow: none;
+                border: 2px solid #eeeeee;
+            }
+
+        #searchpartial {
+            position: absolute;
+            z-index: 10;
+        }
+
+        #CustomSearchLoader {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            z-index: 9999;
+        }
+    </style>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    @RenderSection("script2", required: false)
+
+
+    <!-- Required Jquery -->
+    <script type="text/javascript" src="~/Content/files/bower_components/jquery/js/jquery.min.js"></script>
+    <script type="text/javascript" src="~/Content/files/bower_components/jquery-ui/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="~/Content/files/bower_components/popper.js/js/popper.min.js"></script>
+    <script type="text/javascript" src="~/Content/files/bower_components/bootstrap/js/bootstrap.min.js"></script>
+
+
+    <script src="~/Scripts/moment.min.js"></script>
+    <script type="text/javascript" src="~/Content/files/bower_components/bootstrap-daterangepicker/js/daterangepicker.js"></script>
+
+    <!-- waves js -->
+    <script src="~/Content/files/assets/pages/waves/js/waves.min.js"></script>
+    <!-- jquery slimscroll js -->
+    <script type="text/javascript" src="~/Content/files/bower_components/jquery-slimscroll/js/jquery.slimscroll.js"></script>
+    <!-- Switch component js -->
+    <script type="text/javascript" src="~/Content/files/bower_components/switchery/js/switchery.min.js"></script>
+
+    <!-- jquery slimscroll js -->
+    <script type="text/javascript" src="~/Content/files/bower_components/jquery-slimscroll/js/jquery.slimscroll.js"></script>
+    <!-- Float Chart js -->
+    <script src="~/Content/files/assets/pages/chart/float/jquery.flot.js"></script>
+    <script src="~/Content/files/assets/pages/chart/float/jquery.flot.categories.js"></script>
+    <script src="~/Content/files/assets/pages/chart/float/curvedLines.js"></script>
+    <script src="~/Content/files/assets/pages/chart/float/jquery.flot.tooltip.min.js"></script>
+    <!-- amchart js -->
+    <script src="~/Content/files/assets/pages/widget/amchart/amcharts.js"></script>
+    <script src="~/Content/files/assets/pages/widget/amchart/gauge.js"></script>
+    <script src="~/Content/files/assets/pages/widget/amchart/serial.js"></script>
+    <script src="~/Content/files/assets/pages/widget/amchart/light.js"></script>
+    <script src="~/Content/files/assets/pages/widget/amchart/pie.min.js"></script>
+    <script src="~/Content/files/assets/pages/widget/amchart/ammap.min.js"></script>
+    <script src="~/Content/files/assets/pages/widget/amchart/usaLow.js"></script>
+
+
+    <!-- Color picker js -->
+    <script type="text/javascript" src="~/Content/files/bower_components/spectrum/js/spectrum.js"></script>
+    <script type="text/javascript" src="~/Content/files/bower_components/jscolor/js/jscolor.js"></script>
+    <!-- Date-dropper js -->
+
+    <script type="text/javascript" src="~/Content/files/bower_components/datedropper/js/datedropper.min.js"></script>
+    <!-- Select 2 js -->
+    <script type="text/javascript" src="~/Content/files/bower_components/select2/js/select2.full.min.js"></script>
+    <!-- Multiselect js -->
+    <script type="text/javascript" src="~/Content/files/bower_components/bootstrap-multiselect/js/bootstrap-multiselect.js">
+    </script>
+    <script type="text/javascript" src="~/Content/files/bower_components/multiselect/js/jquery.multi-select.js"></script>
+    <script type="text/javascript" src="~/Content/files/assets/js/jquery.quicksearch.js"></script>
+    <!-- Custom js -->
+    <script type="text/javascript" src="~/Content/files/assets/pages/advance-elements/select2-custom.js"></script>
+    <!-- Chartlist charts -->
+    <script src="~/Content/files/bower_components/chartist/js/chartist.js"></script>
+
+    <!-- Custom js -->
+    <script src="~/Content/files/assets/js/pcoded.min.js"></script>
+    <script src="~/Content/files/assets/js/vertical/vertical-layout.min.js"></script>
+    <script type="text/javascript" src="~/Content/files/assets/pages/dashboard/analytic-dashboard.min.js"></script>
+    <script type="text/javascript" src="~/Content/files/assets/js/script.min.js"></script>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <link href="~/Content/DataTables/datatables.css" rel="stylesheet" />
+    <script src="~/Content/DataTables/datatables.min.js"></script>
+
+
+
+
+    <script>
+        $("#UniquePractics").click(function () {
+            $.ajax({
+                type: "GET",
+                url: "/ReceiverList/GetAllUniquePracticeId",
+                dataType: "json",
+                success: function (result) {
+                    $('#UniquePracticsValues').html('');
+
+                    $.each(result, function (i, item) {
+                        var rows;
+
+                        rows = "<li class='GetPracticevalue'><a href='/Audit/GetDataByPracticeId?PracticeId=" + item + "' class='waves - effect waves - dark'>" + item + "</a></li>"
+
+
+                        $('#UniquePracticsValues').append(rows);
+                    });
+                }
+            })
+        });
+
+    </script>
+
+    <script>
+        $("#CustomSearch").keyup(function () {
+            SearchingLikeSendle();
+        });
+
+        function SearchingLikeSendle() {
+            var val = $("#CustomSearch").val();
+            $("#searchpartial").show();
+
+            if (val == "") {
+                $("#searchpartial").html("");
+                return false;
+            }
+            $.ajax({
+                type: "POST",
+                url: "/Searching/Search",
+                data: {
+                    Search: val
+                },
+                beforeSend: function () {
+                    $("#CustomSearchLoader").show();
+                },
+                complete: function () {
+                    $("#CustomSearchLoader").hide();
+                },
+                success: function (data) {
+                    $("#searchpartial").html(data);
+                }
+            })
+        }
+    </script>
+    <script>
+        $(function () {
+            var t = $('#Duplicatetable').DataTable({
+                searching: false,
+                //info: false,
+                "columnDefs": [{
+                    "searchable": false,
+                    "orderable": false,
+                    "targets": 0
+                }],
+                "order": [[1, 'asc']]
+            });
+
+            t.on('draw.dt', function () {
+                var PageInfo = $('#Duplicatetable').DataTable().page.info();
+                t.column(0, { page: 'current' }).nodes().each(function (cell, i) {
+                    cell.innerHTML = i + 1 + PageInfo.start;
+                });
+            });
+
+        })
+    </script>
+
+    <script>
+        $('ul.pcoded-left-item li a span').click(function () {
+            debugger
+            $(this).removeClass('active');
+        });
+    </script>
+
+</body>
+
+
+</html>

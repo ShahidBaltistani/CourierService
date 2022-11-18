@@ -1,0 +1,217 @@
+﻿
+@{
+    ViewBag.Title = "SingleOrder";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <!-- Tab variant tab card start -->
+        <div class="card">
+            <div class="card-header">
+                <h5 style="font-size: 25px !important;">Create Single Order</h5>
+
+            </div>
+            <div class="card-block tab-icon">
+                <!-- Row start -->
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <form action="/CreatingOrders/CreateSingleOrder" method="post" style="padding: 20px;">
+                            <br />
+                            <div class="row ">
+
+                                <div class="col-md-4  form-group">
+                                    <label for="exampleInputInstruction " class="labeltext">Device Type</label>
+                                    <select class="form-control" id="deviceTypeDD" name="DeviceTypeId" required>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <label for="exampleInputName " class="labeltext">Source</label>
+                                    <select class="form-control" id="sourceDD" name="SourceId" required>
+                                    </select>
+                                </div>
+                                <div class="col-md-4  form-group">
+                                    <label for="Instruction" class="labeltext">Instructions</label>
+                                    <input type="text" class="form-control" id="Instruction" name="Receiver.Instructions" aria-describedby="emailHelp" readonly value="Please Call Support Number">
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-4 form-group">
+                                    <label for="Name" class="labeltext">Name</label>
+                                    <input type="text" class="form-control" name="Receiver.Name" id="Name" placeholder="Enter Name" required>
+                                </div>
+                                <div class="col-md-4  form-group-lg">
+                                    <label for="Email" class="labeltext">Email</label>
+                                    <input type="email" class="form-control" name="Receiver.Email" id="Email" aria-describedby="emailHelp" placeholder="Enter email">
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <label for="Phone" class="labeltext">Phone</label>
+                                    <input type="text" class="form-control" name="Receiver.Phone" id="Phone" placeholder="Phone">
+                                </div>
+                            </div>
+                            <div class="row">
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 form-group">
+                                    <label for="Address_line1" class="labeltext">Address_line1</label>
+                                    <input type="text" class="form-control" required id="Address_line1" name="Receiver.Address_Line1" aria-describedby="emailHelp" placeholder="Enter Address_line1">
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <label for="Address_Line2" class="labeltext">Address_Line2</label>
+                                    <input type="text" class="form-control" required id="Address_Line2" name="Receiver.Address_Line2" placeholder="Enter Full Address">
+                                </div>
+                                <div class="col-md-4  form-group">
+                                    <label for="Suburb" class="labeltext">Suburb</label>
+                                    <input type="text" class="form-control" required id="Suburb" name="Receiver.Suburb" aria-describedby="emailHelp" placeholder="Enter Suburb">
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-4 form-group">
+                                    <label for="Postcode" class="labeltext">Postcode</label>
+                                    <input type="text" class="form-control" required id="Postcode" name="Receiver.Postcode" placeholder="Enter Postcode">
+                                </div>
+                                <div class="col-md-4  form-group">
+                                    <label for="State" class="labeltext">State</label>
+                                    <input type="text" class="form-control" required id="State" name="Receiver.State_Name" aria-describedby="emailHelp" placeholder="Enter State">
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <label for="Country" class="labeltext">Country</label>
+                                    <input type="text" class="form-control" id="Country" name="Receiver.Country" readonly value="United States">
+                                </div>
+                            </div>
+                            <div class="row">
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4  form-group">
+                                    <label for="customer_reference" class="labeltext">Customer_Reference</label>
+                                    <input type="text" class="form-control" id="customer_reference" name="Customer_Reference" aria-describedby="emailHelp" placeholder="Enter customer_reference">
+                                </div>
+                                <div class="col-lg-4" style="margin-bottom:10px;">
+                                    <label for="exampleInputName" class="labeltext">PracticeId</label>
+                                    <select class="form-control" id="searchDD" name="NewPracticeId" required>
+                                    </select>
+                                </div>
+                                <div class="col-md-4  form-group">
+                                    <label for="EHR" class="labeltext">EHR#</label>
+                                    <input type="text" class="form-control" id="EHR" name="EHR" aria-describedby="emailHelp" placeholder="Enter EHR#">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="checkbox-fade fade-in-primary">
+                                        <label>
+                                            <input type="checkbox" id="checkboxAddToTaskManagement" name="AddToTaskManagement" value="True">
+                                            <span class="cr">
+                                                <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                                            </span>
+                                            <span>Do You Want to Add In Task Management ?</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-8"></div>
+                            </div>
+                            <div class="row" id="TaskManagement" style="display: none">
+                                <div class="col-md-4 form-group">
+                                    <label for="From">From</label>
+                                    <input type="text" class="form-control" id="From" name="From" aria-describedby="emailHelp" value="" placeholder="From">
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <label for="Subject">Subject</label>
+                                    <input type="text" class="form-control" name="Subject" id="Subject" placeholder="Enter Subject">
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <label for="datepicker_6" class="col-form-label">Received Date:</label>
+                                    <input class="form-control fill" type="datetime-local" id="datepicker_6" name="ReceivedDate" />
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <label for="Description" class="col-form-label">Description:</label>
+                                    <textarea class="form-control" type="text" id="Description" name="Description" placeholder="Description"></textarea>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-4  form-group">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+
+                                <div class="col-md-8 form-group">
+                                    <button type="submit" class="btn btn-primary" name="MakeReturnorReplacement">Make Return or Replacement</button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+                <!-- Row end -->
+            </div>
+        </div>
+        <!-- Tab variant tab card start -->
+    </div>
+
+</div>
+
+
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $("document").ready(function () {
+        $.ajax({
+            type: "GET",
+            url: "/ExcelClosedXML/SourceDropdown",
+            dataType: "json",
+            success: function (result) {
+                $('#sourceDD').html('');
+                var rows1 = "<option value='' selected disabled > --Select Source--</option >";
+                $('#sourceDD').append(rows1);
+
+                $.each(result, function (i, item) {
+                    var rows;
+                    rows = "<option value='" + item.Id + "'>" + item.Name + "</option>";
+                    $('#sourceDD').append(rows);
+                });
+            }
+        })
+
+        $.ajax({
+            type: "GET",
+            url: "/ExcelClosedXML/DeviceTypeDropdown",
+            dataType: "json",
+            success: function (result) {
+                $('#deviceTypeDD').html('');
+                $.each(result, function (i, item) {
+                    var rows;
+                    rows = "<option value='" + item.Id + "'>" + item.Name + "</option>";
+                    $('#deviceTypeDD').append(rows);
+                });
+            }
+        })
+
+        $.ajax({
+            type: "GET",
+            url: "/DataMerging/NewPracticeDropdown",
+            dataType: "json",
+            success: function (result) {
+                $('#searchDD').html('');
+                var rows1 = "<option value='' selected disabled > --Select PracticeId--</option >";
+                $('#searchDD').append(rows1);
+
+                $.each(result, function (i, item) {
+                    var rows;
+                    rows = "<option value='" + item.Id + "'>" + item.Name + "</option>";
+                    $('#searchDD').append(rows);
+                });
+            }
+        })
+    });
+
+    $('#checkboxAddToTaskManagement').click(function () {
+        $('#TaskManagement').slideToggle("fast");
+    });
+</script>

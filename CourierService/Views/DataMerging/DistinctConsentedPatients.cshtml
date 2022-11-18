@@ -1,0 +1,221 @@
+﻿@model IEnumerable<CourierService.ViewModels.ExternalDB.ConsentedPatientsViewModel>
+@{
+    ViewBag.Title = "DistinctConsentedPatients";
+}
+<style>
+    table {
+        display: block;
+        overflow: scroll;
+    }
+</style>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-2" style="margin-bottom:10px;">
+            <select class="form-control" id="deviceTypeDD">
+            </select>
+        </div>
+        <div class="col-lg-2" style="margin-bottom:10px;">
+            <select class="form-control" id="sourceDD">
+            </select>
+        </div>
+        <div class="col-lg-6" style="margin-bottom:10px;">
+            <h3>
+                <span class="badge badge-success" id="trcount"></span>
+            </h3>
+        </div>
+        <div class="col-lg-2" style="margin-bottom:10px;">
+            <button type="button" class="btn btn-secondary" id="SubmittBtn">Save In Database</button>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-12">
+            <table class="table table-bordered" id="table-information">
+                <thead>
+                    <tr>
+                        <th scope="col">instructions</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">address_line1</th>
+                        <th scope="col">address_line2</th>
+                        <th scope="col">suburb</th>
+                        <th scope="col">postcode</th>
+                        <th scope="col">state</th>
+                        <th scope="col">country</th>
+                        <th scope="col">customer_reference</th>
+                        <th scope="col">Practice_Name</th>
+                        <th scope="col">EHR#</th>
+                        <th scope="col">SVPatientId</th>
+
+
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="tabledata">
+                    @foreach (var item in Model)
+                    {
+                        string Phone = item.mobilePhoneNumber == null ? item.landlineNumber : item.mobilePhoneNumber;
+
+                        <tr id="">
+                            <td><input type="text" value="Please Call Support Number" /></td>
+                            <td><input type="text" value="@item.FullName" /></td>
+                            <td><input type="text" value="@item.email" /></td>
+                            <td><input type="text" value="@Phone" /></td>
+                            <td><input type="text" value="" /></td>
+                            <td><input type="text" value="@item.addressLine1" style="width:450px" /></td>
+                            <td><input type="text" value="" /></td>
+                            <td><input type="text" value="" /></td>
+                            <td><input type="text" value="" /></td>
+                            <td><input type="text" value="United States" /></td>
+                            <td><input type="text" value="" /></td>
+                            <td><input type="text" value="@item.practiceName" /></td>
+                            <td><input type="text" value="@item.ehrNumber" /></td>
+                            <td><input type="text" value="@item.patientId" /></td>
+
+
+
+                            <td>
+                                <button class="removeLink btn btn-primary">Remove</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        
+    </script>
+    <script>
+        $(document).ready(function () {
+
+
+            $("button.removeLink").on("click", function () {
+                var trow = $(this).closest("tr");
+                trow.remove();
+                findcount();
+                return false;
+            });
+            function findcount() {
+                var rowCount = $('#tabledata tr').length;
+                $("#trcount").text(rowCount);
+            }
+            findcount();
+
+
+
+
+            $('#SubmittBtn').click(function () {
+                PostList();
+            });
+
+
+            $.ajax({
+                type: "GET",
+                url: "/ExcelClosedXML/SourceDropdown",
+                dataType: "json",
+                success: function (result) {
+                    $('#sourceDD').html('');
+                    var rows1 = "<option value='' selected disabled > --Select Source--</option >";
+                    $('#sourceDD').append(rows1);
+
+                    $.each(result, function (i, item) {
+                        var rows;
+                        rows = "<option value='" + item.Id + "'>" + item.Name + "</option>";
+                        $('#sourceDD').append(rows);
+                    });
+                }
+            })
+
+            $.ajax({
+                type: "GET",
+                url: "/ExcelClosedXML/DeviceTypeDropdown",
+                dataType: "json",
+                success: function (result) {
+                    $('#deviceTypeDD').html('');
+                    var rows1 = "<option value='' selected disabled > --Select DeviceType--</option >";
+                    $('#deviceTypeDD').append(rows1);
+
+                    $.each(result, function (i, item) {
+                        var rows;
+                        rows = "<option value='" + item.Id + "'>" + item.Name + "</option>";
+                        $('#deviceTypeDD').append(rows);
+                    });
+                }
+            })
+        });
+        function PostList() {
+
+
+            var SourceID = $("#sourceDD option:selected").val();
+            var DeviceTypeID = $("#deviceTypeDD option:selected").val();
+            if (SourceID == "" || DeviceTypeID == "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please select the required dropdowns!',
+                })
+
+                return;
+            }
+
+
+
+
+            var receivers = []; // list object
+            $('#table-information > tbody  > tr').each(function () {
+
+                var receiver = {};
+                receiver.Receiver = {};
+                receiver.Receiver.Instructions = $(this).find("td:eq(0) input[type='text']").val();
+                receiver.Receiver.Name = $(this).find("td:eq(1) input[type='text']").val();
+                receiver.Receiver.Email = $(this).find("td:eq(2) input[type='text']").val();
+                receiver.Receiver.Phone = $(this).find("td:eq(3) input[type='text']").val();
+                receiver.Receiver.Address_Line1 = $(this).find("td:eq(4) input[type='text']").val();
+                receiver.Receiver.Address_Line2 = $(this).find("td:eq(5) input[type='text']").val();
+                receiver.Receiver.Suburb = $(this).find("td:eq(6) input[type='text']").val();
+                receiver.Receiver.Postcode = $(this).find("td:eq(7) input[type='text']").val();
+                receiver.Receiver.State_Name = $(this).find("td:eq(8) input[type='text']").val();
+                receiver.Receiver.Country = $(this).find("td:eq(9) input[type='text']").val();
+                receiver.Customer_Reference = $(this).find("td:eq(10) input[type='text']").val();
+                receiver.PracticeId = $(this).find("td:eq(11) input[type='text']").val();
+                receiver.Receiver.EHR = $(this).find("td:eq(12) input[type='text']").val();
+
+
+                receiver.Receiver.SVPatientId = $(this).find("td:eq(13) input[type='text']").val();
+
+                receiver.SourceId = SourceID;
+                receiver.DeviceTypeId = DeviceTypeID;
+
+
+
+                receivers.push(receiver);
+            });
+
+            debugger;
+            $.ajax({
+                url: '/DataMerging/OrdersListSave',
+                type: "POST",
+                data: JSON.stringify(receivers),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response.result == false) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: '' + response.text + '',
+                        })
+                    } else {
+                        window.location.href = ("/InProcess/InProcessOrders")
+
+                    }
+                }
+            });
+        }
+    </script>
+}

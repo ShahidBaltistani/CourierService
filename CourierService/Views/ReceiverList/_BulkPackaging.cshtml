@@ -1,0 +1,126 @@
+﻿<script src="~/Content/DataTables (1)/datatables.min.js"></script>
+<link href="~/Content/DataTables (1)/datatables.min.css" rel="stylesheet" />
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.print.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/dataTables.buttons.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.semanticui.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.jqueryui.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.html5.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.foundation.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.flash.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.colVis.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.bootstrap4.min.js"></script>
+<script src="~/Content/DataTables (1)/Buttons-1.6.5/js/buttons.bootstrap.min.js"></script>
+
+<link href="~/Content/DataTables (1)/Buttons-1.6.5/css/buttons.bootstrap.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/Buttons-1.6.5/css/buttons.bootstrap4.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/Buttons-1.6.5/css/buttons.dataTables.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/Buttons-1.6.5/css/buttons.foundation.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/Buttons-1.6.5/css/buttons.jqueryui.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/Buttons-1.6.5/css/buttons.semanticui.min.css" rel="stylesheet" />
+
+
+<link href="~/Content/DataTables (1)/SearchPanes-1.2.2/css/searchPanes.bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/SearchPanes-1.2.2/css/searchPanes.bootstrap4.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/SearchPanes-1.2.2/css/searchPanes.dataTables.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/SearchPanes-1.2.2/css/searchPanes.foundation.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/SearchPanes-1.2.2/css/searchPanes.jqueryui.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables (1)/SearchPanes-1.2.2/css/searchPanes.semanticui.min.css" rel="stylesheet" />
+
+<script src="~/Content/DataTables (1)/SearchPanes-1.2.2/js/dataTables.searchPanes.min.js"></script>
+<script src="~/Content/DataTables (1)/SearchPanes-1.2.2/js/searchPanes.bootstrap.min.js"></script>
+<script src="~/Content/DataTables (1)/SearchPanes-1.2.2/js/searchPanes.bootstrap4.min.js"></script>
+<script src="~/Content/DataTables (1)/SearchPanes-1.2.2/js/searchPanes.dataTables.min.js"></script>
+<script src="~/Content/DataTables (1)/SearchPanes-1.2.2/js/searchPanes.foundation.min.js"></script>
+<script src="~/Content/DataTables (1)/SearchPanes-1.2.2/js/searchPanes.jqueryui.min.js"></script>
+<script src="~/Content/DataTables (1)/SearchPanes-1.2.2/js/searchPanes.semanticui.min.js"></script>
+
+
+
+@model IEnumerable<CourierService.ViewModels.Bulk.BulkPackageViewModel>
+@using System.Globalization
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<div class="table-responsive">
+    <table class="table table-hover BulkPackagingPaginationTable" id="BulkPackagingtable" style="overflow-x: scroll;">
+        <thead style="background:#eaefef">
+            <tr>
+                <th>#</th>
+                <th scope="col">Customer_Reference</th>
+                <th scope="col">Short_Serial</th>
+                <th scope="col">Practice</th>
+            </tr>
+        </thead>
+        <tbody class="BulkPackagingPaginationbody">
+            @foreach (var item in Model)
+            {
+                <tr class="BulkPackagingPaginationRow">
+
+                    <td></td>
+                    <td>@item.CustomerReference</td>
+                    <td>@item.ShortSerial</td>
+                    <td>@item.Practice</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .ExportButtonMoving {
+        margin-bottom: 10px;
+        /*margin-left: 850px;
+        margin-bottom: 5px*/
+    }
+
+        .ExportButtonMoving span {
+            display: none;
+        }
+
+        .ExportButtonMoving:after {
+            content: 'Export to Excel';
+        }
+</style>
+
+<script>
+    $(function () {
+
+        var t = $('.BulkPackagingPaginationTable').DataTable({
+            searching: false,
+            paging: false,
+            //pageLength: false,
+            //info: false,
+            "columnDefs": [{
+                "searchable": false,
+                "orderable": false,
+                "targets": 0,
+            }],
+            "order": [[1, 'asc']],
+            scrollY: "400px",
+            dom: 'Bfrtip',
+            buttons: [
+                //'excelHtml5',
+                { extend: 'excel', className: 'btn btn-primary ExportButtonMoving' }
+            ],
+            //scrollX: true
+        });
+
+        t.on('draw.dt', function () {
+            var PageInfo = $('.BulkPackagingPaginationTable').DataTable().page.info();
+            t.column(0, { page: 'current' }).nodes().each(function (cell, i) {
+                cell.innerHTML = i + 1 + PageInfo.start;
+            });
+        });
+
+        $("#btnExcelExport").click(function (e) {
+            t.page.len(-1).draw();
+            window.open('data:application/vnd.ms-excel,' +
+                encodeURIComponent($('#ForExcelExport').parent().html()));
+            setTimeout(function () {
+                table.page.len(10).draw();
+            }, 1000)
+
+        });
+        //$(".ProcessedPaginationTable").dataTable();
+    })
+</script>

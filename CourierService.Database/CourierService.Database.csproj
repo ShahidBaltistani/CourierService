@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D09E15D7-99E9-44B1-B452-73E3CD8725A7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CourierService.Database</RootNamespace>
+    <AssemblyName>CourierService.Database</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CourierServiceContext.cs" />
+    <Compile Include="Migrations\202104231115318_initial_new.cs" />
+    <Compile Include="Migrations\202104231115318_initial_new.Designer.cs">
+      <DependentUpon>202104231115318_initial_new.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104261147376_add_BulkPackage_Entity.cs" />
+    <Compile Include="Migrations\202104261147376_add_BulkPackage_Entity.designer.cs">
+      <DependentUpon>202104261147376_add_BulkPackage_Entity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104261244549_bulkpackages.cs" />
+    <Compile Include="Migrations\202104261244549_bulkpackages.designer.cs">
+      <DependentUpon>202104261244549_bulkpackages.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104280557031_add_oneToMany_relation_taskDetail_taskmail.cs" />
+    <Compile Include="Migrations\202104280557031_add_oneToMany_relation_taskDetail_taskmail.designer.cs">
+      <DependentUpon>202104280557031_add_oneToMany_relation_taskDetail_taskmail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104280646391_ReceivedDate_string_To_DateTime.cs" />
+    <Compile Include="Migrations\202104280646391_ReceivedDate_string_To_DateTime.designer.cs">
+      <DependentUpon>202104280646391_ReceivedDate_string_To_DateTime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104280824098_Add_Description_In_TaskMail.cs" />
+    <Compile Include="Migrations\202104280824098_Add_Description_In_TaskMail.designer.cs">
+      <DependentUpon>202104280824098_Add_Description_In_TaskMail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104281000025_Add_SR_In_TaskDetail.cs" />
+    <Compile Include="Migrations\202104281000025_Add_SR_In_TaskDetail.designer.cs">
+      <DependentUpon>202104281000025_Add_SR_In_TaskDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104290711304_add_Practice_table.cs" />
+    <Compile Include="Migrations\202104290711304_add_Practice_table.designer.cs">
+      <DependentUpon>202104290711304_add_Practice_table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104291121159_add_CancelRemarks_in_orderlog.cs" />
+    <Compile Include="Migrations\202104291121159_add_CancelRemarks_in_orderlog.designer.cs">
+      <DependentUpon>202104291121159_add_CancelRemarks_in_orderlog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105050751535_BaseEntity_INTO_Task.cs" />
+    <Compile Include="Migrations\202105050751535_BaseEntity_INTO_Task.designer.cs">
+      <DependentUpon>202105050751535_BaseEntity_INTO_Task.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105051106216_add_LogTable.cs" />
+    <Compile Include="Migrations\202105051106216_add_LogTable.designer.cs">
+      <DependentUpon>202105051106216_add_LogTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105190528565_Add_Streamvitals_fields.cs" />
+    <Compile Include="Migrations\202105190528565_Add_Streamvitals_fields.designer.cs">
+      <DependentUpon>202105190528565_Add_Streamvitals_fields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105240743046_Manage_Table_For_Practices.cs" />
+    <Compile Include="Migrations\202105240743046_Manage_Table_For_Practices.designer.cs">
+      <DependentUpon>202105240743046_Manage_Table_For_Practices.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105271606313_Add_IsCompleted_In_Order.cs" />
+    <Compile Include="Migrations\202105271606313_Add_IsCompleted_In_Order.designer.cs">
+      <DependentUpon>202105271606313_Add_IsCompleted_In_Order.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105280518501_Add_IntegrationStatus_In_Order.cs" />
+    <Compile Include="Migrations\202105280518501_Add_IntegrationStatus_In_Order.designer.cs">
+      <DependentUpon>202105280518501_Add_IntegrationStatus_In_Order.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105281354032_Add_MainTypeId_In_DeviceType.cs" />
+    <Compile Include="Migrations\202105281354032_Add_MainTypeId_In_DeviceType.designer.cs">
+      <DependentUpon>202105281354032_Add_MainTypeId_In_DeviceType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105281404095_Add_New_Table_MainDeviceType.cs" />
+    <Compile Include="Migrations\202105281404095_Add_New_Table_MainDeviceType.designer.cs">
+      <DependentUpon>202105281404095_Add_New_Table_MainDeviceType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105310535596_Add_fields_In_OrderTable.cs" />
+    <Compile Include="Migrations\202105310535596_Add_fields_In_OrderTable.designer.cs">
+      <DependentUpon>202105310535596_Add_fields_In_OrderTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106081149339_addCompletedRemarks_field_In_Orders.cs" />
+    <Compile Include="Migrations\202106081149339_addCompletedRemarks_field_In_Orders.designer.cs">
+      <DependentUpon>202106081149339_addCompletedRemarks_field_In_Orders.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CourierService.Entities\CourierService.Entities.csproj">
+      <Project>{d06fe246-52b9-40d9-85da-72dbf7069556}</Project>
+      <Name>CourierService.Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202104231115318_initial_new.resx">
+      <DependentUpon>202104231115318_initial_new.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104261147376_add_BulkPackage_Entity.resx">
+      <DependentUpon>202104261147376_add_BulkPackage_Entity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104261244549_bulkpackages.resx">
+      <DependentUpon>202104261244549_bulkpackages.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104280557031_add_oneToMany_relation_taskDetail_taskmail.resx">
+      <DependentUpon>202104280557031_add_oneToMany_relation_taskDetail_taskmail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104280646391_ReceivedDate_string_To_DateTime.resx">
+      <DependentUpon>202104280646391_ReceivedDate_string_To_DateTime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104280824098_Add_Description_In_TaskMail.resx">
+      <DependentUpon>202104280824098_Add_Description_In_TaskMail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104281000025_Add_SR_In_TaskDetail.resx">
+      <DependentUpon>202104281000025_Add_SR_In_TaskDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104290711304_add_Practice_table.resx">
+      <DependentUpon>202104290711304_add_Practice_table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104291121159_add_CancelRemarks_in_orderlog.resx">
+      <DependentUpon>202104291121159_add_CancelRemarks_in_orderlog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105050751535_BaseEntity_INTO_Task.resx">
+      <DependentUpon>202105050751535_BaseEntity_INTO_Task.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105051106216_add_LogTable.resx">
+      <DependentUpon>202105051106216_add_LogTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105190528565_Add_Streamvitals_fields.resx">
+      <DependentUpon>202105190528565_Add_Streamvitals_fields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105240743046_Manage_Table_For_Practices.resx">
+      <DependentUpon>202105240743046_Manage_Table_For_Practices.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105271606313_Add_IsCompleted_In_Order.resx">
+      <DependentUpon>202105271606313_Add_IsCompleted_In_Order.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105280518501_Add_IntegrationStatus_In_Order.resx">
+      <DependentUpon>202105280518501_Add_IntegrationStatus_In_Order.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105281354032_Add_MainTypeId_In_DeviceType.resx">
+      <DependentUpon>202105281354032_Add_MainTypeId_In_DeviceType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105281404095_Add_New_Table_MainDeviceType.resx">
+      <DependentUpon>202105281404095_Add_New_Table_MainDeviceType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105310535596_Add_fields_In_OrderTable.resx">
+      <DependentUpon>202105310535596_Add_fields_In_OrderTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106081149339_addCompletedRemarks_field_In_Orders.resx">
+      <DependentUpon>202106081149339_addCompletedRemarks_field_In_Orders.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+</Project>

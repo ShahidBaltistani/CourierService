@@ -1,0 +1,172 @@
+﻿@model IEnumerable<CourierService.ViewModels.Orders.OrderViewModel>
+
+
+<div>
+
+    <div class="table-responsive">
+        <table class="table table-hover" id="InProcesstable" style="overflow-x: scroll;margin-top: 25px;">
+            <thead style="background:#eaefef">
+                <tr>
+                    <th scope="col">
+
+                        <div class="checkbox-fade fade-in-info">
+                            <label style="margin-bottom:0px !important;">
+                                <input type="checkbox" class="check1" value="" id="checkall1">
+                                <span class="cr">
+                                    <i class="cr-icon icofont icofont-ui-check txt-info" style="padding: 1px;"></i>
+                                </span>
+                            </label>
+                        </div>
+
+
+                    </th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Address Line2</th>
+                    <th scope="col">Practice_Id</th>
+                    <th scope="col">Customer_Reference</th>
+                    <th scope="col">Order Status</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Count() == 0)
+                {
+                    <tr>
+                        <td colspan="5" style="text-align:center;font-size:20px;font-weight:bold;">
+                            No Data Found...
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr id=@item.Id>
+                            <td>
+                                @if (item.OrderStatusId == 1 || item.OrderStatusId == 3)
+                                {
+
+                                    <div class="checkbox-fade fade-in-info">
+                                        <label style="margin-bottom:0px !important;">
+                                            <input type="checkbox" class="checkbox cb-element1 select-item check1" value="" id="statuscheckbox" name="checkboxselected">
+                                            <span class="cr">
+                                                <i class="cr-icon icofont icofont-ui-check txt-info" style="padding: 1px;"></i>
+                                            </span>
+                                        </label>
+                                    </div>
+                                }
+
+                            </td>
+
+                            <td>@item.Receiver.Name</td>
+                            <td>@item.Receiver.Address_Line2</td>
+                            <td>@item.PracticeId</td>
+                            <td>
+                                <form id="add_CustomerRefrence">
+                                    <input type="text" hidden class="form-control orderId" value="@item.Id" name="Id" id="cref-id" style=" max-width: 560px;display: none;">
+
+                                    <div class="form-group">
+                                        <input type="text" class="form-control cref-name" value="@item.Customer_Reference" id="cref-name" name="Customer_Reference" style=" max-width: 560px;">
+                                    </div>
+                                </form>
+                            </td>
+
+                            <td class="statuschange">
+                                @if (item.OrderStatus.Id == 1)
+                                {
+                                    <badge style=" background: #4f99ff; color: white; padding: 5px; border-radius: 5px;">@item.OrderStatus.Name</badge>
+                                }
+                                @if (item.OrderStatus.Id == 3)
+                                {
+                                    <badge style=" background: #ff0000ad; padding: 5px; border-radius: 5px; color: white;">@item.OrderStatus.Name</badge>
+                                }
+
+                            </td>
+                            <td>
+                                @if (item.OrderStatusId == 1 || item.OrderStatusId == 3)
+                                {
+
+
+                                    <div class="btn-group dropdown-split-info">
+                                        <button type="button" class="btn btn-info" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="feather icon-menu" style="margin:0px !important;padding:0px !important"></i></button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item waves-effect waves-light" href="#">Edit Receiver Detail</a>
+
+                                            @*<div class="dropdown-divider"></div>*@
+                                            @*<a class="dropdown-item waves-effect waves-light" data-toggle="modal" data-target="#Customer_Reference" onclick="CustomerReferenceModal(@item.Id,@item.Customer_Reference,@item.OrderStatusId);" id="CustomerReferenceModal" href="#">Update Customer Reference</a>*@
+                                        </div>
+                                    </div>
+
+                                }
+                            </td>
+
+                        </tr>
+                    }
+                }
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script>
+    //checkboxes select all and unselect for searched list
+    $('#checkall1').change(function () {
+
+        $('.cb-element1').prop('checked', this.checked);
+    });
+
+    $('.cb-element1').change(function () {
+        if ($('.cb-element1:checked').length == $('.cb-element1').length) {
+            $('#checkall1').prop('checked', true);
+        }
+        else {
+            $('#checkall1').prop('checked', false);
+        }
+
+    });
+
+</script>
+<script>
+    //disable create order button until chechbox and date not selected
+    $(function () {
+        var chk1 = $('.check1');
+        var btn1 = $('.getvalues');
+
+        chk1.on('change', function () {
+            btn1.prop("disabled", !this.checked);//true: disabled, false: enabled
+        }).trigger('change'); //page load trigger event
+
+    });
+
+</script>
+<script>
+    //pass pickupdate and id's in array to creating order methode
+    $(".getvalues").click(function () {
+        var pickUpDate1 = $(".datepickerpost").val();
+        var List1 = [];
+        $("input[name='checkboxselected']:checked").each(function (id) {
+
+            var closestTr1 = $(this).closest('tr').attr('id');
+            List1.push(closestTr1);
+
+        });
+
+        var data01 = { Id: List1, PickUpDate: pickUpDate1 };
+
+        var json = JSON.stringify(data01);
+
+        $.ajax({
+            type: "POST",
+            url: "/CreatingOrders/CreatingOrder",
+            data: json,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                alert('Order Created Successfully...');
+                window.location.reload();
+            }
+        });
+    });
+</script>

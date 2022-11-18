@@ -1,0 +1,134 @@
+﻿@model CourierService.ViewModels.SearchingDetail.SearchingDetailViewModel
+@{
+    ViewBag.Title = "PatientDetail";
+}
+<div class="row">
+    <div class="col-md-2 offset-10">
+        <a class="btn btn-primary" href="/ReceiverList/DownloadPdfLandScape/@Model.OrderViewModel.Id" target="_blank">
+            Label
+        </a>
+    </div>
+</div>
+<h2>Receiver_Detail</h2>
+<div class="row">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Created_Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.OrderViewModel.Receiver.Name</td>
+                <td>@Model.OrderViewModel.Receiver.Address_Line2</td>
+                <td>@Model.OrderViewModel.Receiver.Phone</td>
+                <td>@Model.OrderViewModel.CreatedOn.Value.ToShortDateString()</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h2>Order_Detail</h2>
+<div class="row">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Customer_Reference</th>
+                <th>OrderStatus</th>
+                <th>Practice</th>
+                <th>Delivery_Status</th>
+                <th>EHR#</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.OrderViewModel.Customer_Reference</td>
+                <td>@Model.OrderViewModel.OrderStatus.Name</td>
+                <td>@Model.OrderViewModel.PracticeId</td>
+                @if (Model.OrderViewModel.DeliveredDate.ToShortDateString().Contains("0001"))
+                {
+                    <td></td>
+                }
+                else
+                {
+                    <td>
+                        @Model.OrderViewModel.DeliveredDate.ToShortDateString()
+                    </td>
+                }
+                <td>@Model.OrderViewModel.Receiver.EHR</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h2>Track_Detail</h2>
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <table class="table" style="border:none !important">
+            <thead>
+                <tr>
+                    <th>
+                        Tracking History
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.OrderTrackingViewModel.Tracking_Events)
+                {
+                    <tr>
+                        <td>
+                            @item.Scan_Time
+                        </td>
+                        <td>
+                            @if (item.Event_Type == "Delivered")
+                            {
+                                <span class="step1"></span>
+                            }
+                            else
+                            {
+                                <span class="step"></span>
+                            }
+                        </td>
+                        <td>
+                            <h1 class="badge badge-primary" style="font-size:18px">
+                                @item.Event_Type
+                            </h1>
+                            <br />
+                            <span>
+                                @item.Description
+                            </span>
+                        </td>
+                        <td>
+                            @item.Location
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<style>
+    /* Make circles that indicate the steps of the form: */
+    .step {
+        height: 15px;
+        width: 15px;
+        margin: 0 2px;
+        background-color: #bbbbbb;
+        border: none;
+        border-radius: 50%;
+        display: inline-block;
+        opacity: 0.5;
+    }
+    .step1 {
+        height: 15px;
+        width: 15px;
+        margin: 0 2px;
+        background-color: #27ff00;
+        border: none;
+        border-radius: 50%;
+        display: inline-block;
+        opacity: 0.5;
+    }
+</style>
